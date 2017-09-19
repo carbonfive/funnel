@@ -10,12 +10,6 @@ defmodule Funnel.Router do
     {:ok, _} = Plug.Adapters.Cowboy.http Funnel.Router, [], [port: 4000]
   end
 
-  get "/" do
-    conn
-      |> send_resp(200, "YAY")
-      |> halt
-  end
-
   post "/events" do
     spawn fn -> Funnel.Investigator.investigate(conn.body_params) end
     conn

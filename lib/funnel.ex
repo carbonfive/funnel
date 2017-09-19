@@ -13,16 +13,4 @@ defmodule Funnel do
     ]
     Supervisor.start_link(children, opts)
   end
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Funnel.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
