@@ -11,7 +11,6 @@ defmodule Funnel.Router do
   end
 
   post "/events" do
-    # IO.puts conn.body_params
     spawn fn -> Funnel.Investigator.investigate(conn.body_params) end
     conn
       |> send_resp(200, "YAY")
