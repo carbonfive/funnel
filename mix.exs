@@ -25,10 +25,10 @@ defmodule Funnel.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.0"},
-      {:tentacat, "~> 0.6"},
+      {:tentacat, "~> 0.7"},
       {:poison, "~> 3.0"},
       {:ex_machina, "~> 2.1", only: :test},
-      {:mock, "~> 0.2.0", only: :test}
+      {:mock, "~> 0.3", only: :test}
     ]
   end
 
