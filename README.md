@@ -1,21 +1,43 @@
 # Funnel
 
-**TODO: Add description**
+A little CI server for git hygiene. Written in Elixir.
 
-## Installation
+## Setup
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `funnel` to your list of dependencies in `mix.exs`:
+### Dependencies
+
+You'll need Elixir, obvs so `brew install elixir`
+
+Then:
 
 ```elixir
-def deps do
-  [
-    {:funnel, "~> 0.1.0"}
-  ]
-end
+mix deps.get
+mix deps.compile
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/funnel](https://hexdocs.pm/funnel).
+### Environment
 
+To authenticate for Github's API, we need a token. Generate that on Github, and then create a `.env` file that looks like:
+
+```bash
+export GITHUB_API_KEY=ABCED1234
+```
+
+### Github Webhook configuration
+
+[Github Webhook How-to](https://developer.github.com/webhooks/creating/)
+
+## Running
+
+You'll have to `source .env` manually before you run the app so...
+
+```bash
+source .env
+iex -S mix
+```
+
+## Testing
+
+```bash
+mix test
+```

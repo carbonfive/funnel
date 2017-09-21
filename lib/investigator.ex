@@ -7,7 +7,7 @@ defmodule Funnel.Investigator do
     scent = get_scent(body)
     {:ok, agent_pid} = Agent.start_link(
       fn ->
-        Tentacat.Client.new(%{access_token: "token"})
+        Tentacat.Client.new(%{access_token: Application.get_env(:funnel, :github_api_token)})
       end
     )
     # check if this is the default branch
