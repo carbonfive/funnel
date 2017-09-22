@@ -29,4 +29,6 @@ config :funnel, github_api_token: System.get_env("GITHUB_API_TOKEN")
 # Configuration from the imported file will override the ones defined
 # here (which is why it is important to import them last).
 #
-#     import_config "#{Mix.env}.exs"
+if "#{Mix.env}" == "test" do
+  import_config "#{Mix.env}.exs"
+end

@@ -1,0 +1,133 @@
+[
+  {
+    "request": {
+      "body": "{\"context\":\"funnel\",\"description\":\"Investigating your commit\",\"state\":\"pending\"}",
+      "headers": {
+        "User-agent": "tentacat",
+        "Authorization": "***"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.github.com/repos/outofambit/musical-spork/statuses/1b076d5669d301aeff2cd6e64f16c433598b99a4"
+    },
+    "response": {
+      "body": "{\"url\":\"https://api.github.com/repos/outofambit/musical-spork/statuses/1b076d5669d301aeff2cd6e64f16c433598b99a4\",\"id\":1571595880,\"state\":\"pending\",\"description\":\"Investigating your commit\",\"target_url\":null,\"context\":\"funnel\",\"created_at\":\"2017-09-22T20:46:05Z\",\"updated_at\":\"2017-09-22T20:46:05Z\",\"creator\":{\"login\":\"outofambit\",\"id\":964912,\"avatar_url\":\"https://avatars3.githubusercontent.com/u/964912?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/outofambit\",\"html_url\":\"https://github.com/outofambit\",\"followers_url\":\"https://api.github.com/users/outofambit/followers\",\"following_url\":\"https://api.github.com/users/outofambit/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/outofambit/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/outofambit/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/outofambit/subscriptions\",\"organizations_url\":\"https://api.github.com/users/outofambit/orgs\",\"repos_url\":\"https://api.github.com/users/outofambit/repos\",\"events_url\":\"https://api.github.com/users/outofambit/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/outofambit/received_events\",\"type\":\"User\",\"site_admin\":false}}",
+      "headers": {
+        "Server": "GitHub.com",
+        "Date": "Fri, 22 Sep 2017 20:46:05 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "1204",
+        "Status": "201 Created",
+        "X-RateLimit-Limit": "5000",
+        "X-RateLimit-Remaining": "4981",
+        "X-RateLimit-Reset": "1506115983",
+        "Cache-Control": "private, max-age=60, s-maxage=60",
+        "Vary": "Accept, Authorization, Cookie, X-GitHub-OTP",
+        "ETag": "\"4e0af56834866c95bfd08b13d8b64865\"",
+        "X-OAuth-Scopes": "repo",
+        "X-Accepted-OAuth-Scopes": "",
+        "Location": "https://api.github.com/repos/outofambit/musical-spork/statuses/1b076d5669d301aeff2cd6e64f16c433598b99a4",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.151857",
+        "X-GitHub-Request-Id": "C87A:3512:171A43A:3411E16:59C5768D"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "\"\\\"\\\"\"",
+      "headers": {
+        "User-agent": "tentacat",
+        "Authorization": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.github.com/repos/outofambit/musical-spork/commits/1b076d5669d301aeff2cd6e64f16c433598b99a4"
+    },
+    "response": {
+      "body": "{\"sha\":\"1b076d5669d301aeff2cd6e64f16c433598b99a4\",\"commit\":{\"author\":{\"name\":\"Evelyn Masso\",\"email\":\"evelyn@carbonfive.com\",\"date\":\"2017-09-20T21:47:31Z\"},\"committer\":{\"name\":\"Evelyn Masso\",\"email\":\"evelyn@carbonfive.com\",\"date\":\"2017-09-20T21:47:31Z\"},\"message\":\"committed\",\"tree\":{\"sha\":\"ceda93a5ac639c952003922e831b6c1bb3b751cd\",\"url\":\"https://api.github.com/repos/outofambit/musical-spork/git/trees/ceda93a5ac639c952003922e831b6c1bb3b751cd\"},\"url\":\"https://api.github.com/repos/outofambit/musical-spork/git/commits/1b076d5669d301aeff2cd6e64f16c433598b99a4\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/1b076d5669d301aeff2cd6e64f16c433598b99a4\",\"html_url\":\"https://github.com/outofambit/musical-spork/commit/1b076d5669d301aeff2cd6e64f16c433598b99a4\",\"comments_url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/1b076d5669d301aeff2cd6e64f16c433598b99a4/comments\",\"author\":{\"login\":\"outofambit\",\"id\":964912,\"avatar_url\":\"https://avatars3.githubusercontent.com/u/964912?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/outofambit\",\"html_url\":\"https://github.com/outofambit\",\"followers_url\":\"https://api.github.com/users/outofambit/followers\",\"following_url\":\"https://api.github.com/users/outofambit/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/outofambit/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/outofambit/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/outofambit/subscriptions\",\"organizations_url\":\"https://api.github.com/users/outofambit/orgs\",\"repos_url\":\"https://api.github.com/users/outofambit/repos\",\"events_url\":\"https://api.github.com/users/outofambit/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/outofambit/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"outofambit\",\"id\":964912,\"avatar_url\":\"https://avatars3.githubusercontent.com/u/964912?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/outofambit\",\"html_url\":\"https://github.com/outofambit\",\"followers_url\":\"https://api.github.com/users/outofambit/followers\",\"following_url\":\"https://api.github.com/users/outofambit/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/outofambit/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/outofambit/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/outofambit/subscriptions\",\"organizations_url\":\"https://api.github.com/users/outofambit/orgs\",\"repos_url\":\"https://api.github.com/users/outofambit/repos\",\"events_url\":\"https://api.github.com/users/outofambit/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/outofambit/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"727aadc8b4f7d4d8451c31f02f93b12b306cf173\",\"url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/727aadc8b4f7d4d8451c31f02f93b12b306cf173\",\"html_url\":\"https://github.com/outofambit/musical-spork/commit/727aadc8b4f7d4d8451c31f02f93b12b306cf173\"}],\"stats\":{\"total\":0,\"additions\":0,\"deletions\":0},\"files\":[]}",
+      "headers": {
+        "Server": "GitHub.com",
+        "Date": "Fri, 22 Sep 2017 20:46:06 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "3076",
+        "Status": "200 OK",
+        "X-RateLimit-Limit": "5000",
+        "X-RateLimit-Remaining": "4980",
+        "X-RateLimit-Reset": "1506115983",
+        "Cache-Control": "private, max-age=60, s-maxage=60",
+        "Vary": "Accept, Authorization, Cookie, X-GitHub-OTP",
+        "ETag": "\"43b03dfcea3bca96b77d9dfbd46ae2ee\"",
+        "Last-Modified": "Wed, 20 Sep 2017 21:47:31 GMT",
+        "X-OAuth-Scopes": "repo",
+        "X-Accepted-OAuth-Scopes": "",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.159210",
+        "X-GitHub-Request-Id": "C87A:3512:171A466:3411E71:59C5768D"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  },
+  {
+    "request": {
+      "body": "\"\\\"\\\"\"",
+      "headers": {
+        "User-agent": "tentacat",
+        "Authorization": "***"
+      },
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.github.com/repos/outofambit/musical-spork/branches/master"
+    },
+    "response": {
+      "body": "{\"name\":\"master\",\"commit\":{\"sha\":\"b3413506832597723564f74ae0478bdd05ce5f97\",\"commit\":{\"author\":{\"name\":\"Evelyn Masso\",\"email\":\"evelyn@carbonfive.com\",\"date\":\"2017-09-19T21:39:39Z\"},\"committer\":{\"name\":\"Evelyn Masso\",\"email\":\"evelyn@carbonfive.com\",\"date\":\"2017-09-19T21:39:39Z\"},\"message\":\"committed\",\"tree\":{\"sha\":\"ceda93a5ac639c952003922e831b6c1bb3b751cd\",\"url\":\"https://api.github.com/repos/outofambit/musical-spork/git/trees/ceda93a5ac639c952003922e831b6c1bb3b751cd\"},\"url\":\"https://api.github.com/repos/outofambit/musical-spork/git/commits/b3413506832597723564f74ae0478bdd05ce5f97\",\"comment_count\":0},\"url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/b3413506832597723564f74ae0478bdd05ce5f97\",\"html_url\":\"https://github.com/outofambit/musical-spork/commit/b3413506832597723564f74ae0478bdd05ce5f97\",\"comments_url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/b3413506832597723564f74ae0478bdd05ce5f97/comments\",\"author\":{\"login\":\"outofambit\",\"id\":964912,\"avatar_url\":\"https://avatars3.githubusercontent.com/u/964912?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/outofambit\",\"html_url\":\"https://github.com/outofambit\",\"followers_url\":\"https://api.github.com/users/outofambit/followers\",\"following_url\":\"https://api.github.com/users/outofambit/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/outofambit/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/outofambit/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/outofambit/subscriptions\",\"organizations_url\":\"https://api.github.com/users/outofambit/orgs\",\"repos_url\":\"https://api.github.com/users/outofambit/repos\",\"events_url\":\"https://api.github.com/users/outofambit/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/outofambit/received_events\",\"type\":\"User\",\"site_admin\":false},\"committer\":{\"login\":\"outofambit\",\"id\":964912,\"avatar_url\":\"https://avatars3.githubusercontent.com/u/964912?v=4\",\"gravatar_id\":\"\",\"url\":\"https://api.github.com/users/outofambit\",\"html_url\":\"https://github.com/outofambit\",\"followers_url\":\"https://api.github.com/users/outofambit/followers\",\"following_url\":\"https://api.github.com/users/outofambit/following{/other_user}\",\"gists_url\":\"https://api.github.com/users/outofambit/gists{/gist_id}\",\"starred_url\":\"https://api.github.com/users/outofambit/starred{/owner}{/repo}\",\"subscriptions_url\":\"https://api.github.com/users/outofambit/subscriptions\",\"organizations_url\":\"https://api.github.com/users/outofambit/orgs\",\"repos_url\":\"https://api.github.com/users/outofambit/repos\",\"events_url\":\"https://api.github.com/users/outofambit/events{/privacy}\",\"received_events_url\":\"https://api.github.com/users/outofambit/received_events\",\"type\":\"User\",\"site_admin\":false},\"parents\":[{\"sha\":\"bc84be42426386800376f7383c18423d9f00bbdd\",\"url\":\"https://api.github.com/repos/outofambit/musical-spork/commits/bc84be42426386800376f7383c18423d9f00bbdd\",\"html_url\":\"https://github.com/outofambit/musical-spork/commit/bc84be42426386800376f7383c18423d9f00bbdd\"}]},\"_links\":{\"self\":\"https://api.github.com/repos/outofambit/musical-spork/branches/master\",\"html\":\"https://github.com/outofambit/musical-spork/tree/master\"},\"protected\":true,\"protection\":{\"enabled\":true,\"required_status_checks\":{\"enforcement_level\":\"non_admins\",\"contexts\":[\"murj\"]}},\"protection_url\":\"https://api.github.com/repos/outofambit/musical-spork/branches/master/protection\"}",
+      "headers": {
+        "Server": "GitHub.com",
+        "Date": "Fri, 22 Sep 2017 20:46:06 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "3426",
+        "Status": "200 OK",
+        "X-RateLimit-Limit": "5000",
+        "X-RateLimit-Remaining": "4979",
+        "X-RateLimit-Reset": "1506115983",
+        "Cache-Control": "private, max-age=60, s-maxage=60",
+        "Vary": "Accept, Authorization, Cookie, X-GitHub-OTP",
+        "ETag": "\"16b9675ecffc3a904daecb8abc2d36ff\"",
+        "X-OAuth-Scopes": "repo",
+        "X-Accepted-OAuth-Scopes": "",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.029519",
+        "X-GitHub-Request-Id": "C87A:3512:171A482:3411EB9:59C5768E"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]
