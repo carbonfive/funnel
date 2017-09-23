@@ -35,14 +35,14 @@ defmodule Funnel.Investigator do
   defp fail_all_branches(scent, agent_pid) do
     tenta_client = Agent.get(agent_pid, fn state -> state end)
     # get all branches in repo
-    branches_res = Tentacat.Repositories.Branches.list scent["owner_login"], scent["repo_name"], tenta_client
-    Enum.each branches_res, fn(b) ->
-      if b["name"] !== scent["default_branch"] do
-        spawn fn ->
-          Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], b["commit"]["sha"], failure_status_body(), tenta_client
-        end
+    Tentacat.Repositories.Branches.list(scent["owner_login"], scent["repo_name"], tenta_client)
+    # and mark them failed
+    |> Enum.filter(fn(b) -> b["name"] !== scent["default_branch_name"] end)
+    |> Enum.each(fn(b) ->
+      spawn fn ->
+        Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], b["commit"]["sha"], failure_status_body(), tenta_client
       end
-    end
+    end)
   end
 
   defp investigate_push(scent, agent_pid) do
