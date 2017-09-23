@@ -38,11 +38,12 @@ defmodule Funnel.Investigator do
     Tentacat.Repositories.Branches.list(scent["owner_login"], scent["repo_name"], tenta_client)
     # and mark them failed
     |> Enum.filter(fn(b) -> b["name"] !== scent["default_branch_name"] end)
-    |> Enum.each(fn(b) ->
-      spawn fn ->
+    |> Enum.map(fn(b) ->
+      Task.async fn ->
         Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], b["commit"]["sha"], failure_status_body(), tenta_client
       end
     end)
+    |> Task.yield_many(10000)
   end
 
   defp investigate_push(scent, agent_pid) do

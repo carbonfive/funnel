@@ -100,7 +100,9 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Branches, [:passthrough], []}
     ]) do
       use_cassette "default_branch_pushed" do
-        Funnel.Investigator.investigate build(:push_webhook_master_body)
+        Task.async(fn -> Funnel.Investigator.investigate build(:push_webhook_master_body) end)
+        |> Task.await(10000)
+
         assert called Tentacat.Client.new :_
         refute called Tentacat.Repositories.Statuses.create(
           "outofambit",
