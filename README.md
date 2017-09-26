@@ -41,3 +41,10 @@ iex -S mix
 ```bash
 mix test
 ```
+
+## Deploying
+
+```bash
+docker build -t build-funnel -f docker/Dockerfile.build .
+docker run -v $PWD/releases:/app/releases build-funnel
+```

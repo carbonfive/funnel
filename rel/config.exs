@@ -49,5 +49,5 @@ release :funnel do
   set applications: [
     :runtime_tools
   ]
+  set output_dir: './releases/funnel'
 end
-

@@ -21,3 +21,6 @@ erl_crash.dump
 
 # Environment variable file
 .env
+
+# Release build output
+releases
