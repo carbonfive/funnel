@@ -29,7 +29,8 @@ defmodule Funnel.Mixfile do
       {:poison, "~> 3.0"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.3", only: :test},
-      {:exvcr, "~> 0.8", only: :test}
+      {:exvcr, "~> 0.8", only: :test},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 
