@@ -44,7 +44,13 @@ mix test
 
 ## Deploying
 
+### Building a release
+
 ```bash
 docker build -t build-funnel -f docker/Dockerfile.build .
 docker run -v $PWD/releases:/app/releases build-funnel
 ```
+
+### Deploying
+
+_something with ansible_
