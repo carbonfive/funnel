@@ -1,0 +1,20 @@
+[Unit]
+Description=Funnel
+After=network.target
+
+[Service]
+Type=forking
+# User=appuser
+# Group=appuser
+WorkingDirectory=/opt/funnel/
+ExecStart=/opt/funnel/bin/funnel start
+ExecStop=/opt/funnel/bin/funnel stop
+Restart=on-failure
+RestartSec=5
+Environment=PORT=8080
+Environment=LANG=en_US.UTF-8
+SyslogIdentifier=funnel
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
