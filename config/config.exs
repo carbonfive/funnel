@@ -3,6 +3,7 @@
 use Mix.Config
 
 config :funnel, github_api_token: System.get_env("GITHUB_API_TOKEN")
+config :funnel, port: String.to_integer(System.get_env("PORT"))
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

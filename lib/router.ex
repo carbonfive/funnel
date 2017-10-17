@@ -7,7 +7,7 @@ defmodule Funnel.Router do
   plug :dispatch
 
   def start_link() do
-    {:ok, _} = Plug.Adapters.Cowboy.http Funnel.Router, [], [port: 4000]
+    {:ok, _} = Plug.Adapters.Cowboy.http Funnel.Router, [], [port: Application.get_env(:funnel, :port)]
   end
 
   post "/events" do

@@ -20,7 +20,8 @@ mix deps.compile
 To authenticate for Github's API, we need a token. Generate that on Github, and then create a `.env` file that looks like:
 
 ```bash
-export GITHUB_API_KEY=ABCED1234
+export GITHUB_API_KEY="ABCED1234"
+export PORT=4000
 ```
 
 ### Github Webhook configuration
