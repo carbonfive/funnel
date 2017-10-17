@@ -2,7 +2,7 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :funnel, github_api_token: System.get_env("GITHUB_API_TOKEN")
+# config :funnel, github_api_token: System.get_env("GITHUB_API_TOKEN")
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
