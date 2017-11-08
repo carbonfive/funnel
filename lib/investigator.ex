@@ -7,7 +7,8 @@ defmodule Funnel.Investigator do
     scent = get_scent(body)
     {:ok, agent_pid} = Agent.start_link(
       fn ->
-        Tentacat.Client.new(%{access_token: System.get_env("GITHUB_API_TOKEN")})
+        token = elem(Tentacat.Apps.Installations.token(scent["installation_id"], Tentacat.Client.new(%{jwt: Funnel.Auth.get_jwt()})), 1)["token"]
+        Tentacat.Client.new(%{access_token: token})
       end
     )
     # check if this is the default branch
@@ -23,7 +24,8 @@ defmodule Funnel.Investigator do
       "owner_login" => body["repository"]["owner"]["login"],
       "repo_name" => body["repository"]["name"],
       "commit_sha" => body["head_commit"]["id"],
-      "default_branch_name" => body["repository"]["default_branch"]
+      "default_branch_name" => body["repository"]["default_branch"],
+      "installation_id" => body["installation"]["id"]
     }
   end
 
