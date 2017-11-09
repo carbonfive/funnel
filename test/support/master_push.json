@@ -44,12 +44,12 @@
     "contents_url": "https://api.github.com/repos/outofambit/musical-spork/contents/{+path}",
     "description": null,
     "keys_url": "https://api.github.com/repos/outofambit/musical-spork/keys{/key_id}",
-    "open_issues": 2,
+    "open_issues": 3,
     "downloads_url": "https://api.github.com/repos/outofambit/musical-spork/downloads",
     "url": "https://github.com/outofambit/musical-spork",
     "forks_url": "https://api.github.com/repos/outofambit/musical-spork/forks",
     "milestones_url": "https://api.github.com/repos/outofambit/musical-spork/milestones{/number}",
-    "open_issues_count": 2,
+    "open_issues_count": 3,
     "has_wiki": false,
     "stargazers": 0,
     "archive_url": "https://api.github.com/repos/outofambit/musical-spork/{archive_format}{/ref}",
@@ -64,6 +64,7 @@
     "releases_url": "https://api.github.com/repos/outofambit/musical-spork/releases{/id}",
     "merges_url": "https://api.github.com/repos/outofambit/musical-spork/merges",
     "tags_url": "https://api.github.com/repos/outofambit/musical-spork/tags",
+    "archived": false,
     "watchers_count": 0,
     "collaborators_url": "https://api.github.com/repos/outofambit/musical-spork/collaborators{/collaborator}",
     "git_commits_url": "https://api.github.com/repos/outofambit/musical-spork/git/commits{/sha}",
@@ -91,7 +92,7 @@
     },
     "hooks_url": "https://api.github.com/repos/outofambit/musical-spork/hooks",
     "git_url": "git://github.com/outofambit/musical-spork.git",
-    "pushed_at": 1506125946,
+    "pushed_at": 1510252939,
     "forks_count": 0,
     "blobs_url": "https://api.github.com/repos/outofambit/musical-spork/git/blobs{/sha}",
     "events_url": "https://api.github.com/repos/outofambit/musical-spork/events",
@@ -116,15 +117,20 @@
     "name": "outofambit",
     "email": "evoutofambit@gmail.com"
   },
+  "installation": {
+    "id": 65943
+  },
   "head_commit": {
-    "url": "https://github.com/outofambit/musical-spork/commit/986af48c0c24152831fc964f52dcbf90e70e8f6e",
-    "tree_id": "ceda93a5ac639c952003922e831b6c1bb3b751cd",
-    "timestamp": "2017-09-22T17:14:08-07:00",
+    "url": "https://github.com/outofambit/musical-spork/commit/966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
+    "tree_id": "bdff783c6a1bffeafdef29361db5b1cddefbbfcc",
+    "timestamp": "2017-11-09T10:42:04-08:00",
     "removed": [],
-    "modified": [],
-    "message": "again",
-    "id": "986af48c0c24152831fc964f52dcbf90e70e8f6e",
-    "distinct": false,
+    "modified": [
+      "hi.txt"
+    ],
+    "message": "bye",
+    "id": "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
+    "distinct": true,
     "committer": {
       "username": "outofambit",
       "name": "Evelyn Masso",
@@ -140,17 +146,19 @@
   "forced": false,
   "deleted": false,
   "created": false,
-  "compare": "https://github.com/outofambit/musical-spork/compare/b34135068325...986af48c0c24",
+  "compare": "https://github.com/outofambit/musical-spork/compare/0104944fdc7f...966bf60dcd5b",
   "commits": [
     {
-      "url": "https://github.com/outofambit/musical-spork/commit/986af48c0c24152831fc964f52dcbf90e70e8f6e",
-      "tree_id": "ceda93a5ac639c952003922e831b6c1bb3b751cd",
-      "timestamp": "2017-09-22T17:14:08-07:00",
+      "url": "https://github.com/outofambit/musical-spork/commit/966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
+      "tree_id": "bdff783c6a1bffeafdef29361db5b1cddefbbfcc",
+      "timestamp": "2017-11-09T10:42:04-08:00",
       "removed": [],
-      "modified": [],
-      "message": "again",
-      "id": "986af48c0c24152831fc964f52dcbf90e70e8f6e",
-      "distinct": false,
+      "modified": [
+        "hi.txt"
+      ],
+      "message": "bye",
+      "id": "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
+      "distinct": true,
       "committer": {
         "username": "outofambit",
         "name": "Evelyn Masso",
@@ -164,7 +172,7 @@
       "added": []
     }
   ],
-  "before": "b3413506832597723564f74ae0478bdd05ce5f97",
-  "base_ref": "refs/heads/hobgoblin",
-  "after": "986af48c0c24152831fc964f52dcbf90e70e8f6e"
+  "before": "0104944fdc7f904b8debf54b95ac2e5ff8a1a575",
+  "base_ref": null,
+  "after": "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a"
 }

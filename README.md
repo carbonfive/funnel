@@ -43,6 +43,14 @@ iex -S mix
 mix test
 ```
 
+### Recording Webhooks for Testing
+
+Insert this in the `events` handler in `router.ex`:
+
+```elixir
+File.write!("./test.json", Poison.encode!(conn.body_params), [:binary])
+```
+
 ## Deploying
 
 ### Building a release
