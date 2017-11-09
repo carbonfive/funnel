@@ -2,7 +2,7 @@ defmodule Funnel.Investigator do
   alias Tentacat.Repositories
   alias Tentacat.Client
   alias Tentacat.Commits
-  alias Tentacat.Apps
+  alias Tentacat.App
 
   @doc """
   Handle a given a webhook notification and generate github statuses
@@ -77,7 +77,7 @@ defmodule Funnel.Investigator do
 
   defp get_token(scent) do
     import Funnel.Auth, only: [get_jwt: 0]
-    elem(Apps.Installations.token(scent["installation_id"], Client.new(%{jwt: get_jwt()})), 1)["token"]
+    elem(App.Installations.token(scent["installation_id"], Client.new(%{jwt: get_jwt()})), 1)["token"]
   end
 
   defp pending_status_body() do
