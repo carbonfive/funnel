@@ -7,8 +7,7 @@ defmodule Funnel.Investigator do
     scent = get_scent(body)
     {:ok, agent_pid} = Agent.start_link(
       fn ->
-        token = elem(Tentacat.Apps.Installations.token(scent["installation_id"], Tentacat.Client.new(%{jwt: Funnel.Auth.get_jwt()})), 1)["token"]
-        Tentacat.Client.new(%{access_token: token})
+        Tentacat.Client.new(%{access_token: get_token(scent)})
       end
     )
     # check if this is the default branch
@@ -70,6 +69,10 @@ defmodule Funnel.Investigator do
       end
 
     Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], chosen_status_body, tenta_client
+  end
+
+  defp get_token(scent) do
+    elem(Tentacat.Apps.Installations.token(scent["installation_id"], Tentacat.Client.new(%{jwt: Funnel.Auth.get_jwt()})), 1)["token"]
   end
 
   defp pending_status_body() do
