@@ -2,7 +2,6 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-# config :funnel, github_api_token: System.get_env("GITHUB_API_TOKEN")
 config :funnel, github_app_id: 6544
 config :tentacat, extra_headers: [{"Accept", "application/vnd.github.machine-man-preview+json"}]
 
