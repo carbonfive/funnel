@@ -2,7 +2,7 @@ defmodule Funnel.Auth do
   def get_jwt do
     opts = %{
       alg: "RS256",
-      key: JsonWebToken.Algorithm.RsaUtil.private_key("./", "key.pem")
+      key: JsonWebToken.Algorithm.RsaUtil.private_key(System.get_env("GITHUB_PRIVATE_KEY"))
     }
     now = System.os_time(:second)
     payload = %{
