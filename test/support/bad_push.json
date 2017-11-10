@@ -24,7 +24,7 @@
     "updated_at": "2017-09-19T16:17:58Z",
     "fork": false,
     "has_pages": false,
-    "size": 8,
+    "size": 10,
     "issues_url": "https://api.github.com/repos/outofambit/musical-spork/issues{/number}",
     "assignees_url": "https://api.github.com/repos/outofambit/musical-spork/assignees{/user}",
     "subscription_url": "https://api.github.com/repos/outofambit/musical-spork/subscription",
@@ -44,12 +44,12 @@
     "contents_url": "https://api.github.com/repos/outofambit/musical-spork/contents/{+path}",
     "description": null,
     "keys_url": "https://api.github.com/repos/outofambit/musical-spork/keys{/key_id}",
-    "open_issues": 2,
+    "open_issues": 3,
     "downloads_url": "https://api.github.com/repos/outofambit/musical-spork/downloads",
     "url": "https://github.com/outofambit/musical-spork",
     "forks_url": "https://api.github.com/repos/outofambit/musical-spork/forks",
     "milestones_url": "https://api.github.com/repos/outofambit/musical-spork/milestones{/number}",
-    "open_issues_count": 2,
+    "open_issues_count": 3,
     "has_wiki": false,
     "stargazers": 0,
     "archive_url": "https://api.github.com/repos/outofambit/musical-spork/{archive_format}{/ref}",
@@ -64,6 +64,7 @@
     "releases_url": "https://api.github.com/repos/outofambit/musical-spork/releases{/id}",
     "merges_url": "https://api.github.com/repos/outofambit/musical-spork/merges",
     "tags_url": "https://api.github.com/repos/outofambit/musical-spork/tags",
+    "archived": false,
     "watchers_count": 0,
     "collaborators_url": "https://api.github.com/repos/outofambit/musical-spork/collaborators{/collaborator}",
     "git_commits_url": "https://api.github.com/repos/outofambit/musical-spork/git/commits{/sha}",
@@ -91,7 +92,7 @@
     },
     "hooks_url": "https://api.github.com/repos/outofambit/musical-spork/hooks",
     "git_url": "git://github.com/outofambit/musical-spork.git",
-    "pushed_at": 1505944055,
+    "pushed_at": 1510252824,
     "forks_count": 0,
     "blobs_url": "https://api.github.com/repos/outofambit/musical-spork/git/blobs{/sha}",
     "events_url": "https://api.github.com/repos/outofambit/musical-spork/events",
@@ -111,19 +112,24 @@
     "git_refs_url": "https://api.github.com/repos/outofambit/musical-spork/git/refs{/sha}",
     "statuses_url": "https://api.github.com/repos/outofambit/musical-spork/statuses/{sha}"
   },
-  "ref": "refs/heads/cool-person",
+  "ref": "refs/heads/bad-boy",
   "pusher": {
     "name": "outofambit",
     "email": "evoutofambit@gmail.com"
   },
+  "installation": {
+    "id": 65943
+  },
   "head_commit": {
-    "url": "https://github.com/outofambit/musical-spork/commit/1b076d5669d301aeff2cd6e64f16c433598b99a4",
-    "tree_id": "ceda93a5ac639c952003922e831b6c1bb3b751cd",
-    "timestamp": "2017-09-20T14:47:31-07:00",
+    "url": "https://github.com/outofambit/musical-spork/commit/6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
+    "tree_id": "849d325af6ec364058093daff3f4d99edef28c2b",
+    "timestamp": "2017-11-09T10:40:12-08:00",
     "removed": [],
-    "modified": [],
-    "message": "committed",
-    "id": "1b076d5669d301aeff2cd6e64f16c433598b99a4",
+    "modified": [
+      "hi.txt"
+    ],
+    "message": "goodly",
+    "id": "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
     "distinct": true,
     "committer": {
       "username": "outofambit",
@@ -139,17 +145,19 @@
   },
   "forced": false,
   "deleted": false,
-  "created": false,
-  "compare": "https://github.com/outofambit/musical-spork/compare/727aadc8b4f7...1b076d5669d3",
+  "created": true,
+  "compare": "https://github.com/outofambit/musical-spork/commit/6e669ab91b9c",
   "commits": [
     {
-      "url": "https://github.com/outofambit/musical-spork/commit/1b076d5669d301aeff2cd6e64f16c433598b99a4",
-      "tree_id": "ceda93a5ac639c952003922e831b6c1bb3b751cd",
-      "timestamp": "2017-09-20T14:47:31-07:00",
+      "url": "https://github.com/outofambit/musical-spork/commit/6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
+      "tree_id": "849d325af6ec364058093daff3f4d99edef28c2b",
+      "timestamp": "2017-11-09T10:40:12-08:00",
       "removed": [],
-      "modified": [],
-      "message": "committed",
-      "id": "1b076d5669d301aeff2cd6e64f16c433598b99a4",
+      "modified": [
+        "hi.txt"
+      ],
+      "message": "goodly",
+      "id": "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
       "distinct": true,
       "committer": {
         "username": "outofambit",
@@ -164,7 +172,7 @@
       "added": []
     }
   ],
-  "before": "727aadc8b4f7d4d8451c31f02f93b12b306cf173",
+  "before": "0000000000000000000000000000000000000000",
   "base_ref": null,
-  "after": "1b076d5669d301aeff2cd6e64f16c433598b99a4"
+  "after": "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1"
 }

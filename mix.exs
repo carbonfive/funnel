@@ -15,7 +15,7 @@ defmodule Funnel.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :cowboy, :plug, :tentacat],
+      extra_applications: [:logger, :cowboy, :plug, :tentacat, :json_web_token],
       mod: {Funnel, []}
     ]
   end
@@ -25,12 +25,14 @@ defmodule Funnel.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.0"},
-      {:tentacat, "~> 0.7"},
+      # {:tentacat, "~> 0.7"},
+      {:tentacat, github: "outofambit/tentacat", branch: "installation-api"},
       {:poison, "~> 3.0"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.3", only: :test},
       {:exvcr, "~> 0.8", only: :test},
-      {:distillery, "~> 1.5", runtime: false}
+      {:distillery, "~> 1.5", runtime: false},
+      {:json_web_token, "~> 0.2.10"}
     ]
   end
 

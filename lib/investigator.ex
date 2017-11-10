@@ -1,4 +1,8 @@
 defmodule Funnel.Investigator do
+  alias Tentacat.Repositories
+  alias Tentacat.Client
+  alias Tentacat.Commits
+  alias Tentacat.App
 
   @doc """
   Handle a given a webhook notification and generate github statuses
@@ -7,7 +11,7 @@ defmodule Funnel.Investigator do
     scent = get_scent(body)
     {:ok, agent_pid} = Agent.start_link(
       fn ->
-        Tentacat.Client.new(%{access_token: System.get_env("GITHUB_API_TOKEN")})
+        Client.new(%{access_token: get_token(scent)})
       end
     )
     # check if this is the default branch
@@ -23,7 +27,8 @@ defmodule Funnel.Investigator do
       "owner_login" => body["repository"]["owner"]["login"],
       "repo_name" => body["repository"]["name"],
       "commit_sha" => body["head_commit"]["id"],
-      "default_branch_name" => body["repository"]["default_branch"]
+      "default_branch_name" => body["repository"]["default_branch"],
+      "installation_id" => body["installation"]["id"]
     }
   end
 
@@ -35,7 +40,7 @@ defmodule Funnel.Investigator do
   defp fail_all_branches(scent, agent_pid) do
     tenta_client = Agent.get(agent_pid, fn state -> state end)
     # get all branches in repo
-    Tentacat.Repositories.Branches.list(scent["owner_login"], scent["repo_name"], tenta_client)
+    Repositories.Branches.list(scent["owner_login"], scent["repo_name"], tenta_client)
     # and mark them failed
     |> Enum.filter(fn(b) ->
       b["name"] !== scent["default_branch_name"] and b["commit"]["sha"] !== scent["commit_sha"]
@@ -43,7 +48,7 @@ defmodule Funnel.Investigator do
     )
     |> Enum.map(fn(b) ->
       Task.async fn ->
-        Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], b["commit"]["sha"], failure_status_body(), tenta_client
+        Repositories.Statuses.create scent["owner_login"], scent["repo_name"], b["commit"]["sha"], failure_status_body(), tenta_client
       end
     end)
     |> Task.yield_many(10000)
@@ -52,13 +57,13 @@ defmodule Funnel.Investigator do
   defp investigate_push(scent, agent_pid) do
     tenta_client = Agent.get(agent_pid, fn state -> state end)
     # mark as pending
-    Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], pending_status_body(), tenta_client
+    Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], pending_status_body(), tenta_client
 
     # get commit branch head
-    commit_parent_sha = hd(Tentacat.Commits.find(scent["commit_sha"], scent["owner_login"], scent["repo_name"], tenta_client)["parents"])["sha"]
+    commit_parent_sha = hd(Commits.find(scent["commit_sha"], scent["owner_login"], scent["repo_name"], tenta_client)["parents"])["sha"]
 
     # get default branch head
-    branch_sha = Tentacat.Repositories.Branches.find(scent["owner_login"], scent["repo_name"], scent["default_branch_name"], tenta_client)["commit"]["sha"]
+    branch_sha = Repositories.Branches.find(scent["owner_login"], scent["repo_name"], scent["default_branch_name"], tenta_client)["commit"]["sha"]
 
     # compare and update status
     chosen_status_body =
@@ -67,7 +72,12 @@ defmodule Funnel.Investigator do
         false -> failure_status_body()
       end
 
-    Tentacat.Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], chosen_status_body, tenta_client
+    Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], chosen_status_body, tenta_client
+  end
+
+  defp get_token(scent) do
+    import Funnel.Auth, only: [get_jwt: 0]
+    elem(App.Installations.token(scent["installation_id"], Client.new(%{jwt: get_jwt()})), 1)["token"]
   end
 
   defp pending_status_body() do

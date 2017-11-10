@@ -13,7 +13,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []}
+      {Tentacat.Repositories.Branches, [:passthrough], []},
+      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "bad_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:push_webhook_bad_body)
@@ -21,7 +22,7 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "1b076d5669d301aeff2cd6e64f16c433598b99a4",
+          "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
           %{
              "state": "pending",
              "description": "Investigating your commit",
@@ -38,7 +39,7 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "1b076d5669d301aeff2cd6e64f16c433598b99a4",
+          "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
           %{
              "state": "failure",
              "description": "Commit must be rebased and squashed",
@@ -55,7 +56,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []}
+      {Tentacat.Repositories.Branches, [:passthrough], []},
+      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "good_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:push_webhook_good_body)
@@ -63,7 +65,7 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "986af48c0c24152831fc964f52dcbf90e70e8f6e",
+          build(:push_webhook_good_body)["after"],
           %{
              "state": "pending",
              "description": "Investigating your commit",
@@ -80,7 +82,7 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "986af48c0c24152831fc964f52dcbf90e70e8f6e",
+          build(:push_webhook_good_body)["after"],
           %{
              "state": "success",
              "description": "Commit is good to merge",
@@ -97,7 +99,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []}
+      {Tentacat.Repositories.Branches, [:passthrough], []},
+      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "default_branch_pushed" do
         Task.async(fn -> Funnel.Investigator.investigate build(:push_webhook_master_body) end)
@@ -107,7 +110,7 @@ defmodule Funnel.InvestigatorTest do
         refute called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "986af48c0c24152831fc964f52dcbf90e70e8f6e",
+          "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
           :_,
           :_
         )
