@@ -1,35 +1,29 @@
 # This file is responsible for configuring your application
 # and its dependencies with the aid of the Mix.Config module.
+#
+# This configuration file is loaded before any dependency and
+# is restricted to this project.
 use Mix.Config
 
 config :funnel, github_app_id: 6544
 config :tentacat, extra_headers: [{"Accept", "application/vnd.github.machine-man-preview+json"}]
+# General application configuration
+config :funnel,
+  ecto_repos: [Funnel.Repo]
 
-# This configuration is loaded before any dependency and is restricted
-# to this project. If another project depends on this project, this
-# file won't be loaded nor affect the parent project. For this reason,
-# if you want to provide default values for your application for
-# 3rd-party users, it should be done in your "mix.exs" file.
+# Configures the endpoint
+config :funnel, FunnelWeb.Endpoint,
+  url: [host: "localhost"],
+  secret_key_base: "QYRH+Gbs+Qf190fcL99b4xKxTt7qiHyGQTaKNmCXsLBedu68iflOsm8s2mBSayWV",
+  render_errors: [view: FunnelWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Funnel.PubSub,
+           adapter: Phoenix.PubSub.PG2]
 
-# You can configure your application as:
-#
-#     config :funnel, key: :value
-#
-# and access this configuration in your application as:
-#
-#     Application.get_env(:funnel, :key)
-#
-# You can also configure a 3rd-party app:
-#
-#     config :logger, level: :info
-#
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
 
-# It is also possible to import configuration files, relative to this
-# directory. For example, you can emulate configuration per environment
-# by uncommenting the line below and defining dev.exs, test.exs and such.
-# Configuration from the imported file will override the ones defined
-# here (which is why it is important to import them last).
-#
-if "#{Mix.env}" == "test" do
-  import_config "#{Mix.env}.exs"
-end
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env}.exs"

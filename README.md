@@ -1,40 +1,27 @@
 # Funnel
 
 A little CI server for git hygiene. Written in Elixir.
+To start your Phoenix server:
 
-## Setup
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Install Node.js dependencies with `cd assets && npm install`
+  * Source environment vars with `source .env`
+  * Start Phoenix endpoint with `mix phx.server`
 
-### Dependencies
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-You'll need Elixir, obvs so `brew install elixir`
-
-Then:
-
-```elixir
-mix deps.get
-mix deps.compile
-```
+Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
 ### Environment
 
 To authenticate for Github's API, we need a token. Generate that on Github, and then create a `.env` file that looks like:
 
 ```bash
-export GITHUB_API_KEY="ABCED1234"
 export PORT=4000
-```
-
-### Github Webhook configuration
-
-[Github Webhook How-to](https://developer.github.com/webhooks/creating/)
-
-## Running
-
-You'll have to `source .env` manually before you run the app so...
-
-```bash
-source .env
-iex -S mix
+export GITHUB_CLIENT_ID=23p8uqnj
+export GITHUB_CLIENT_SECRET=gs084kjn
+export GITHUB_PRIVATE_KEY=5537sdkbhj
 ```
 
 ## Testing
@@ -50,16 +37,3 @@ Insert this in the `events` handler in `router.ex`:
 ```elixir
 File.write!("./test.json", Poison.encode!(conn.body_params), [:binary])
 ```
-
-## Deploying
-
-### Building a release
-
-```bash
-docker build -t build-funnel -f docker/Dockerfile.build .
-docker run -v $PWD/releases:/app/releases build-funnel
-```
-
-### Deploying
-
-_something with ansible_
