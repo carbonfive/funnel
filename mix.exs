@@ -21,7 +21,7 @@ defmodule Funnel.Mixfile do
   def application do
     [
       mod: {Funnel.Application, []},
-      extra_applications: [:logger, :runtime_tools, :tentacat, :json_web_token]
+      extra_applications: [:logger, :runtime_tools, :tentacat]
     ]
   end
 
