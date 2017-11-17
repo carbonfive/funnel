@@ -36,7 +36,8 @@ defmodule Funnel.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.0"},
-      {:tentacat, "~> 0.7"},
+      # {:tentacat, "~> 0.7"},
+      {:tentacat, github: "outofambit/tentacat", branch: "more-installation-api"},
       {:poison, "~> 3.0"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.3", only: :test},
@@ -50,6 +51,7 @@ defmodule Funnel.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
+      {:oauth2, "~> 0.9"}
     ]
   end
 

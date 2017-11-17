@@ -1,0 +1,41 @@
+[
+  {
+    "request": {
+      "body": "\"\"",
+      "headers": {
+        "Accept": "application/vnd.github.machine-man-preview+json",
+        "User-agent": "tentacat",
+        "Authorization": "***"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.github.com/app/installations/65943/access_tokens"
+    },
+    "response": {
+      "body": "{\"token\":\"v1.6c0183e6ff458c390b80774664159c818ac32914\",\"expires_at\":\"2017-11-21T00:41:32Z\"}",
+      "headers": {
+        "Date": "Mon, 20 Nov 2017 23:41:32 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "91",
+        "Server": "GitHub.com",
+        "Status": "201 Created",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Vary": "Accept",
+        "ETag": "\"3989d44c8fec8bf8e7f2ce4f443367e8\"",
+        "X-GitHub-Media-Type": "github.machine-man-preview; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.018610",
+        "X-GitHub-Request-Id": "EEF1:2B93:73ED9B8:867E39D:5A13682C"
+      },
+      "status_code": 201,
+      "type": "ok"
+    }
+  }
+]
