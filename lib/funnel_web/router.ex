@@ -25,4 +25,13 @@ defmodule FunnelWeb.Router do
 
     post "/events", EventsController, :receive
   end
+
+  scope "/auth", FunnelWeb do
+    pipe_through :browser
+
+    get "/login", AuthController, :login
+
+    get "/callback", AuthController, :callback
+  end
+
 end

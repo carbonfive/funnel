@@ -14,7 +14,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      # TODO: mock higher function in GitHubAuth instead
+      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "bad_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:push_webhook_bad_body)
@@ -57,7 +58,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      # TODO: mock higher function in GitHubAuth instead
+      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "good_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:push_webhook_good_body)
@@ -100,7 +102,8 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      {Funnel.Auth, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      # TODO: mock higher function in GitHubAuth instead
+      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "default_branch_pushed" do
         Task.async(fn -> Funnel.Investigator.investigate build(:push_webhook_master_body) end)

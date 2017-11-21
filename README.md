@@ -22,6 +22,8 @@ export PORT=4000
 export GITHUB_CLIENT_ID=23p8uqnj
 export GITHUB_CLIENT_SECRET=gs084kjn
 export GITHUB_PRIVATE_KEY=5537sdkbhj
+export GITHUB_OAUTH_CLIENT_ID=skjsdf
+export GITHUB_OAUTH_CLIENT_SECRET=9872345kbjh
 ```
 
 ## Testing

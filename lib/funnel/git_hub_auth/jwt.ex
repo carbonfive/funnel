@@ -1,4 +1,4 @@
-defmodule Funnel.Auth do
+defmodule Funnel.GitHubAuth.Jwt do
   def get_jwt do
     opts = %{
       alg: "RS256",

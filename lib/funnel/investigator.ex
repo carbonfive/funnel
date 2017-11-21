@@ -1,8 +1,7 @@
 defmodule Funnel.Investigator do
   alias Tentacat.Repositories
-  alias Tentacat.Client
   alias Tentacat.Commits
-  alias Tentacat.App
+  alias Funnel.GitHubAuth
 
   @doc """
   Handle a given a webhook notification and generate github statuses
@@ -11,7 +10,7 @@ defmodule Funnel.Investigator do
     scent = get_scent(body)
     {:ok, agent_pid} = Agent.start_link(
       fn ->
-        Client.new(%{access_token: get_token(scent)})
+        GitHubAuth.get_installation_client(scent["installation_id"])
       end
     )
     # check if this is the default branch
@@ -73,11 +72,6 @@ defmodule Funnel.Investigator do
       end
 
     Repositories.Statuses.create scent["owner_login"], scent["repo_name"], scent["commit_sha"], chosen_status_body, tenta_client
-  end
-
-  defp get_token(scent) do
-    import Funnel.Auth, only: [get_jwt: 0]
-    elem(App.Installations.token(scent["installation_id"], Client.new(%{jwt: get_jwt()})), 1)["token"]
   end
 
   defp pending_status_body() do
