@@ -18,7 +18,7 @@ defmodule Funnel.InvestigatorTest do
       {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "bad_non_default_branch_pushed" do
-        Funnel.Investigator.investigate build(:push_webhook_bad_body)
+        Funnel.Investigator.investigate build(:bad_push_scent)
         assert called Tentacat.Client.new :_
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
@@ -62,7 +62,7 @@ defmodule Funnel.InvestigatorTest do
       {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "good_non_default_branch_pushed" do
-        Funnel.Investigator.investigate build(:push_webhook_good_body)
+        Funnel.Investigator.investigate build(:good_push_scent)
         assert called Tentacat.Client.new :_
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
@@ -106,7 +106,7 @@ defmodule Funnel.InvestigatorTest do
       {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "default_branch_pushed" do
-        Task.async(fn -> Funnel.Investigator.investigate build(:push_webhook_master_body) end)
+        Task.async(fn -> Funnel.Investigator.investigate build(:default_push_scent) end)
         |> Task.await(10000)
 
         assert called Tentacat.Client.new :_
