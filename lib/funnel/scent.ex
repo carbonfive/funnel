@@ -6,7 +6,7 @@ defmodule Funnel.Scent do
     :commit_sha,
     :default_branch_name,
     :installation_id,
-    :ref,
+    :branch_name,
   ]
   defstruct [
     :owner_login,
@@ -14,7 +14,7 @@ defmodule Funnel.Scent do
     :commit_sha,
     :default_branch_name,
     :installation_id,
-    :ref,
+    :branch_name,
   ]
 
   def get_scent(body) do
@@ -24,12 +24,12 @@ defmodule Funnel.Scent do
       commit_sha: body["head_commit"]["id"],
       default_branch_name: body["repository"]["default_branch"],
       installation_id: body["installation"]["id"],
-      ref: body["ref"],
+      branch_name: List.last(String.split(body["ref"], "/"))
     }
   end
 
   def is_default_push?(scent) do
-    String.ends_with? scent.ref, scent.default_branch_name
+    scent.branch_name == scent.default_branch_name
   end
 
 end

@@ -11,7 +11,7 @@ defmodule Funnel.ScentTest do
       commit_sha: "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
       default_branch_name: "master",
       installation_id: 65943,
-      ref: "refs/heads/bad-boy",
+      branch_name: "bad-boy",
     }
   end
 

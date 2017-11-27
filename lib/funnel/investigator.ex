@@ -3,6 +3,7 @@ defmodule Funnel.Investigator do
   alias Tentacat.Repositories
   alias Tentacat.Commits
   alias Funnel.GitHubAuth
+  alias Funnel.Investigator.Status
 
   @doc """
   Handle a given a webhook notification and generate github statuses
@@ -33,7 +34,7 @@ defmodule Funnel.Investigator do
     )
     |> Enum.map(fn(b) ->
       Task.async fn ->
-        Repositories.Statuses.create scent.owner_login, scent.repo_name, b["commit"]["sha"], failure_status_body(), tenta_client
+        Repositories.Statuses.create scent.owner_login, scent.repo_name, b["commit"]["sha"], Status.failure(), tenta_client
       end
     end)
     |> Task.yield_many(10000)
@@ -42,46 +43,31 @@ defmodule Funnel.Investigator do
   defp investigate_push(scent, agent_pid) do
     tenta_client = Agent.get(agent_pid, fn state -> state end)
     # mark as pending
-    Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, pending_status_body(), tenta_client
+    Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending(), tenta_client
 
     # get commit branch head
     commit_parent_sha = hd(Commits.find(scent.commit_sha, scent.owner_login, scent.repo_name, tenta_client)["parents"])["sha"]
 
     # get default branch head
-    branch_sha = Repositories.Branches.find(scent.owner_login, scent.repo_name, scent.default_branch_name, tenta_client)["commit"]["sha"]
-
+    branch_sha = get_base_sha(scent, tenta_client)
     # compare and update status
     chosen_status_body =
       case commit_parent_sha === branch_sha do
-        true -> success_status_body()
-        false -> failure_status_body()
+        true -> Status.success()
+        false -> Status.failure()
       end
 
     Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, chosen_status_body, tenta_client
   end
 
-  defp pending_status_body() do
-    %{
-       "state": "pending",
-       "description": "Investigating your commit",
-       "context": "funnel"
-     }
-  end
-
-  defp success_status_body() do
-    %{
-       "state": "success",
-       "description": "Commit is good to merge",
-       "context": "funnel"
-     }
-  end
-
-  defp failure_status_body() do
-    %{
-       "state": "failure",
-       "description": "Commit must be rebased and squashed",
-       "context": "funnel"
-     }
+  defp get_base_sha(scent, client) do
+    # see if there's a pull request open for this branch
+    ret = List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, client))["head"]["sha"]
+    # otherwise, assume the default branch
+    if ret == nil do
+      ret = Repositories.Branches.find(scent.owner_login, scent.repo_name, scent.default_branch_name, client)["commit"]["sha"]
+    end
+    ret
   end
 
 end

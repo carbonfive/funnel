@@ -14,21 +14,15 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      # TODO: mock higher function in GitHubAuth instead
-      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
       use_cassette "bad_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:bad_push_scent)
-        assert called Tentacat.Client.new :_
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
-          %{
-             "state": "pending",
-             "description": "Investigating your commit",
-             "context": "funnel"
-          },
+          build(:bad_push_scent).commit_sha,
+          build(:pending_status),
           :_
         )
         assert called Tentacat.Repositories.Branches.find(
@@ -40,12 +34,8 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
-          %{
-             "state": "failure",
-             "description": "Commit must be rebased and squashed",
-             "context": "funnel"
-          },
+          build(:bad_push_scent).commit_sha,
+          build(:failure_status),
           :_
         )
       end
@@ -58,21 +48,15 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      # TODO: mock higher function in GitHubAuth instead
-      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
       use_cassette "good_non_default_branch_pushed" do
         Funnel.Investigator.investigate build(:good_push_scent)
-        assert called Tentacat.Client.new :_
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          build(:push_webhook_good_body)["after"],
-          %{
-             "state": "pending",
-             "description": "Investigating your commit",
-             "context": "funnel"
-          },
+          build(:good_push_scent).commit_sha,
+          build(:pending_status),
           :_
         )
         assert called Tentacat.Repositories.Branches.find(
@@ -84,12 +68,8 @@ defmodule Funnel.InvestigatorTest do
         assert called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          build(:push_webhook_good_body)["after"],
-          %{
-             "state": "success",
-             "description": "Commit is good to merge",
-             "context": "funnel"
-          },
+          build(:good_push_scent).commit_sha,
+          build(:success_status),
           :_
         )
       end
@@ -102,18 +82,16 @@ defmodule Funnel.InvestigatorTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []},
       {Tentacat.Commits, [:passthrough], []},
       {Tentacat.Repositories.Branches, [:passthrough], []},
-      # TODO: mock higher function in GitHubAuth instead
-      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
       use_cassette "default_branch_pushed" do
         Task.async(fn -> Funnel.Investigator.investigate build(:default_push_scent) end)
         |> Task.await(10000)
 
-        assert called Tentacat.Client.new :_
         refute called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
-          "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
+          build(:default_push_scent).commit_sha,
           :_,
           :_
         )
@@ -126,22 +104,14 @@ defmodule Funnel.InvestigatorTest do
           "outofambit",
           "musical-spork",
           :_,
-          %{
-             "state": "failure",
-             "description": "Commit must be rebased and squashed",
-             "context": "funnel"
-           },
+          build(:failure_status),
           :_
         )
         refute called Tentacat.Repositories.Statuses.create(
           "outofambit",
           "musical-spork",
           :_,
-          %{
-             "state": "success",
-             "description": "Commit is good to merge",
-             "context": "funnel"
-          },
+          build(:success_status),
           :_
         )
       end
