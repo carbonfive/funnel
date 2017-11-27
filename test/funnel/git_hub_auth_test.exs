@@ -10,8 +10,6 @@ defmodule Funnel.GitHubAuthTest do
 
   test "get_installation_client/1" do
     with_mocks([
-      {Tentacat.App, [:passthrough], []},
-      {Tentacat.Client, [:passthrough], []},
       {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
     ]) do
       use_cassette "get_installation_access_token" do

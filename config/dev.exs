@@ -14,6 +14,8 @@ config :funnel, FunnelWeb.Endpoint,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
                     cd: Path.expand("../assets", __DIR__)]]
 
+config :funnel, github_app_id: 6615
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
