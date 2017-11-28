@@ -18,10 +18,10 @@ defmodule Funnel.Factory do
     %Funnel.Scent{
       owner_login: "outofambit",
       repo_name: "musical-spork",
-      commit_sha: "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
+      commit_sha: "029d4f9cc14efdfd69c326839809954844925370",
       default_branch_name: "master",
-      installation_id: 65943,
-      ref: "refs/heads/bad-boy",
+      installation_id: 66216,
+      branch_name: "bad-boy",
     }
   end
 
@@ -29,9 +29,9 @@ defmodule Funnel.Factory do
     %Funnel.Scent{
       commit_sha: "6b7d4200317e2b5e2cad2b19a22e7ad8e8add382",
       default_branch_name: "master",
-      installation_id: 65943,
+      installation_id: 66216,
       owner_login: "outofambit",
-      ref: "refs/heads/good-boy",
+      branch_name: "good-boy",
       repo_name: "musical-spork"
     }
   end
@@ -42,9 +42,21 @@ defmodule Funnel.Factory do
       default_branch_name: "master",
       installation_id: 65943,
       owner_login: "outofambit",
-      ref: "refs/heads/master",
+      branch_name: "master",
       repo_name: "musical-spork"
     }
+  end
+
+  def success_status_factory do
+    Funnel.Investigator.Status.success()
+  end
+
+  def pending_status_factory do
+    Funnel.Investigator.Status.pending()
+  end
+
+  def failure_status_factory do
+    Funnel.Investigator.Status.failure()
   end
 
 end
