@@ -3,7 +3,7 @@ defmodule FunnelWeb.EventsController do
   alias Funnel.Investigator
 
   def receive(conn, _params) do
-    Task.start_link fn -> Investigator.investigate(Funnel.Scent.get_scent(conn.body_params)) end
+    Investigator.investigate(Funnel.Scent.get_scent(conn.body_params))
     text conn, "Thanks!"
   end
 
