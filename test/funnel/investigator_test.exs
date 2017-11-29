@@ -8,32 +8,31 @@ defmodule Funnel.InvestigatorTest do
     HTTPoison.start
   end
 
-  test "bad non default branch pushed" do
+  test "bad pull request synced" do
     with_mocks([
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
-      {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []},
       {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
-      use_cassette "bad_non_default_branch_pushed" do
+      use_cassette "bad_pull_request_synced" do
         Funnel.Investigator.investigate build(:bad_push_scent)
         assert called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:bad_push_scent).owner_login,
+          build(:bad_push_scent).repo_name,
           build(:bad_push_scent).commit_sha,
           build(:pending_status),
           :_
         )
-        assert called Tentacat.Repositories.Branches.find(
-          "outofambit",
-          "musical-spork",
-          "master",
+        refute called Tentacat.Repositories.Statuses.create(
+          build(:bad_push_scent).owner_login,
+          build(:bad_push_scent).repo_name,
+          build(:bad_push_scent).commit_sha,
+          build(:success_status),
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:bad_push_scent).owner_login,
+          build(:bad_push_scent).repo_name,
           build(:bad_push_scent).commit_sha,
           build(:failure_status),
           :_
@@ -42,32 +41,31 @@ defmodule Funnel.InvestigatorTest do
     end
   end
 
-  test "good non default branch pushed" do
+  test "good pull request synced" do
     with_mocks([
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
-      {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []},
       {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
-      use_cassette "good_non_default_branch_pushed" do
+      use_cassette "good_pull_request_synced" do
         Funnel.Investigator.investigate build(:good_push_scent)
         assert called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:good_push_scent).owner_login,
+          build(:good_push_scent).repo_name,
           build(:good_push_scent).commit_sha,
           build(:pending_status),
           :_
         )
-        assert called Tentacat.Repositories.Branches.find(
-          "outofambit",
-          "musical-spork",
-          "master",
+        refute called Tentacat.Repositories.Statuses.create(
+          build(:good_push_scent).owner_login,
+          build(:good_push_scent).repo_name,
+          build(:good_push_scent).commit_sha,
+          build(:failure_status),
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:good_push_scent).owner_login,
+          build(:good_push_scent).repo_name,
           build(:good_push_scent).commit_sha,
           build(:success_status),
           :_
@@ -76,40 +74,32 @@ defmodule Funnel.InvestigatorTest do
     end
   end
 
-  test "default branch pushed" do
+  test "branch pushed" do
     with_mocks([
       {Tentacat.Client, [:passthrough], []},
       {Tentacat.Repositories.Statuses, [:passthrough], []},
-      {Tentacat.Commits, [:passthrough], []},
-      {Tentacat.Repositories.Branches, [:passthrough], []},
       {Funnel.GitHubAuth, [], [get_installation_client: fn(_) -> Tentacat.Client.new() end]}
     ]) do
       use_cassette "default_branch_pushed" do
-        Task.async(fn -> Funnel.Investigator.investigate build(:default_push_scent) end)
-        |> Task.await(10000)
+        Funnel.Investigator.investigate build(:push_scent)
 
         refute called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
-          build(:default_push_scent).commit_sha,
+          build(:push_scent).owner_login,
+          build(:push_scent).repo_name,
+          build(:push_scent).commit_sha,
           :_,
           :_
         )
-        assert called Tentacat.Repositories.Branches.list(
-          "outofambit",
-          "musical-spork",
-          :_
-        )
         assert called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:push_scent).owner_login,
+          build(:push_scent).repo_name,
           :_,
           build(:failure_status),
           :_
         )
         refute called Tentacat.Repositories.Statuses.create(
-          "outofambit",
-          "musical-spork",
+          build(:push_scent).owner_login,
+          build(:push_scent).repo_name,
           :_,
           build(:success_status),
           :_
