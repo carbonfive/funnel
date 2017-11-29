@@ -15,10 +15,13 @@ defmodule Funnel.Investigator do
       end
     )
     # check if this is the default branch
-    if Scent.is_default_push?(scent) do
-      fail_all_branches(scent, agent_pid)
-    else
-      investigate_push(scent, agent_pid)
+    cond do
+      Scent.is_default_push?(scent) ->
+        fail_all_branches(scent, agent_pid)
+      is_notable_action?(scent) ->
+        investigate_push(scent, agent_pid)
+      true ->
+        :noop
     end
   end
 
@@ -62,12 +65,22 @@ defmodule Funnel.Investigator do
 
   defp get_base_sha(scent, client) do
     # see if there's a pull request open for this branch
-    ret = List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, client))["head"]["sha"]
+    pr_sha = List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, client))["head"]["sha"]
     # otherwise, assume the default branch
-    if ret == nil do
-      ret = Repositories.Branches.find(scent.owner_login, scent.repo_name, scent.default_branch_name, client)["commit"]["sha"]
+    if pr_sha == nil do
+      Repositories.Branches.find(scent.owner_login, scent.repo_name, scent.default_branch_name, client)["commit"]["sha"]
     end
-    ret
+  end
+
+  defp is_notable_action?(scent) do
+    cond do
+      scent.action == nil ->
+        true
+      Enum.member?(Application.get_env(:funnel, :notable_actions), scent.action) ->
+        true
+      true ->
+        false
+    end
   end
 
 end
