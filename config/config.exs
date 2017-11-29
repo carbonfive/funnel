@@ -6,6 +6,7 @@
 use Mix.Config
 
 config :funnel, github_app_id: 6544
+config :funnel, notable_actions: ["opened", "reopened", "synchronize"]
 config :tentacat, extra_headers: [{"Accept", "application/vnd.github.machine-man-preview+json"}]
 # General application configuration
 config :funnel,

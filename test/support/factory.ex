@@ -14,6 +14,10 @@ defmodule Funnel.Factory do
     Poison.decode!(File.read!("test/support/master_push.json"))
   end
 
+  def pull_request_webhook_payload_factory do
+    Poison.decode!(File.read!("test/support/pull_request_synchronize.json"))
+  end
+
   def bad_push_scent_factory do
     %Funnel.Scent{
       owner_login: "outofambit",
