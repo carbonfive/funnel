@@ -15,12 +15,10 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 
 ### Environment
 
-To authenticate for Github's API, we need a token. Generate that on Github, and then create a `.env` file that looks like:
+An example of an .env file.
 
 ```bash
-export PORT=4000
-export GITHUB_CLIENT_ID=23p8uqnj
-export GITHUB_CLIENT_SECRET=gs084kjn
+export GITHUB_APP_ID=6615
 export GITHUB_PRIVATE_KEY=5537sdkbhj
 export GITHUB_OAUTH_CLIENT_ID=skjsdf
 export GITHUB_OAUTH_CLIENT_SECRET=9872345kbjh
@@ -30,14 +28,6 @@ export GITHUB_OAUTH_CLIENT_SECRET=9872345kbjh
 
 ```bash
 mix test
-```
-
-### Recording Webhooks for Testing
-
-Insert this in the `events` handler in `router.ex`:
-
-```elixir
-File.write!("./test.json", Poison.encode!(conn.body_params), [:binary])
 ```
 
 ## Reference
