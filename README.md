@@ -1,6 +1,21 @@
 # Funnel
 
 A little CI server for git hygiene. Written in Elixir.
+
+Rationale: [Always Squash and Rebase your Git Commits](https://blog.carbonfive.com/2017/08/28/always-squash-and-rebase-your-git-commits/)
+
+## Using funnel on a project
+
+1. Visit the Funnel homepage: [https://github.com/apps/funnel](https://github.com/apps/funnel)
+
+2. Click `Configure`
+
+3. Select the organization and project(s) you want to use Funnel on
+
+That's it! Now, whenver you submitted a Pull Request, Funnel will warn you anytime your new branch is not rebased and squashed against the base branch. And Funnel keeps things up to date -- if the base branch changes, the branch being PR'd will fail Funnel until it's rebased and squashed against the updated base branch.
+
+## Developing
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
