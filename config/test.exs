@@ -14,6 +14,8 @@ config :funnel, FunnelWeb.Endpoint,
   http: [port: 4001],
   server: false
 
+config :funnel, github_app_id: 6615
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

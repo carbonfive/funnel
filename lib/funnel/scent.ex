@@ -6,7 +6,7 @@ defmodule Funnel.Scent do
     :commit_sha,
     :default_branch_name,
     :installation_id,
-    :branch_name,
+    :branch_name
   ]
   defstruct [
     :action,
@@ -16,6 +16,7 @@ defmodule Funnel.Scent do
     :default_branch_name,
     :installation_id,
     :branch_name,
+    :pr_number
   ]
 
   def get_scent(params, event_type) do
@@ -37,7 +38,8 @@ defmodule Funnel.Scent do
       commit_sha: params["pull_request"]["head"]["sha"],
       default_branch_name: params["repository"]["default_branch"],
       installation_id: params["installation"]["id"],
-      branch_name: params["pull_request"]["head"]["ref"]
+      branch_name: params["pull_request"]["head"]["ref"],
+      pr_number: params["pull_request"]["number"]
     }
   end
 

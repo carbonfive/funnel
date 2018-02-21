@@ -24,7 +24,8 @@ defmodule Funnel.ScentTest do
       default_branch_name: "master",
       installation_id: 66216,
       owner_login: "outofambit",
-      repo_name: "musical-spork"
+      repo_name: "musical-spork",
+      pr_number: 12
     }
   end
 
