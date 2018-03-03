@@ -1,0 +1,41 @@
+[
+  {
+    "request": {
+      "body": "{\"context\":\"funnel\",\"description\":\"Investigating your branch\",\"state\":\"pending\"}",
+      "headers": {
+        "Accept": "application/vnd.github.machine-man-preview+json",
+        "User-agent": "tentacat"
+      },
+      "method": "post",
+      "options": [],
+      "request_body": "",
+      "url": "https://api.github.com/repos/outofambit/musical-spork/statuses/966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a"
+    },
+    "response": {
+      "binary": false,
+      "body": "{\"message\":\"Not Found\",\"documentation_url\":\"https://developer.github.com/v3/repos/statuses/#create-a-status\"}",
+      "headers": {
+        "Server": "GitHub.com",
+        "Date": "Sat, 03 Mar 2018 18:37:45 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "109",
+        "Status": "404 Not Found",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "59",
+        "X-RateLimit-Reset": "1520105865",
+        "X-GitHub-Media-Type": "github.machine-man-preview; format=json",
+        "Access-Control-Expose-Headers": "ETag, Link, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "default-src 'none'",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Runtime-rack": "0.024480",
+        "X-GitHub-Request-Id": "EAB8:271D:19DC417:46FE26F:5A9AEB76"
+      },
+      "status_code": 404,
+      "type": "ok"
+    }
+  }
+]
