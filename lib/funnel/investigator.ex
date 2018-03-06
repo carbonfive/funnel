@@ -7,16 +7,12 @@ defmodule Funnel.Investigator do
   Handle a given a webhook notification and generate github statuses
   """
   def investigate(scent) do
-    {:ok, agent_pid} = Agent.start_link(
-      fn ->
-        GitHubAuth.get_installation_client(scent.installation_id)
-      end
-    )
+    tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
     cond do
       Helpers.is_notable_action?(scent) ->
-        Strategy.Sawtooth.investigate_push(scent, agent_pid)
+        Strategy.Sawtooth.investigate_push(scent, tenta_client)
       true ->
-        Helpers.fail_open_pull_requests(scent, agent_pid)
+        Helpers.fail_open_pull_requests(scent, tenta_client)
     end
   end
 
