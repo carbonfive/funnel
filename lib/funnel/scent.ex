@@ -1,4 +1,7 @@
 defmodule Funnel.Scent do
+  @moduledoc """
+  Collection of necessary data (and helpers) from a GitHub pull request (or push) event notification to investigate it
+  """
 
   @enforce_keys [
     :owner_login,
@@ -19,6 +22,7 @@ defmodule Funnel.Scent do
     :pr_number
   ]
 
+  @spec get_scent(%{}, charlist) :: %__MODULE__{}
   def get_scent(params, event_type) do
     case event_type do
       "push" -> get_scent_from_push(params)
@@ -26,10 +30,12 @@ defmodule Funnel.Scent do
     end
   end
 
+  @spec is_default_push?(%Funnel.Scent{}) :: boolean
   def is_default_push?(scent) do
     scent.branch_name == scent.default_branch_name
   end
 
+  @spec get_scent_from_pull_request(%{}) :: %__MODULE__{}
   defp get_scent_from_pull_request(params) do
     %__MODULE__{
       action: params["action"],
@@ -43,6 +49,7 @@ defmodule Funnel.Scent do
     }
   end
 
+  @spec get_scent_from_push(%{}) :: %__MODULE__{}
   defp get_scent_from_push(params) do
     %__MODULE__{
       owner_login: params["repository"]["owner"]["login"],

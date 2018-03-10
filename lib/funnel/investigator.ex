@@ -6,6 +6,7 @@ defmodule Funnel.Investigator do
   @doc """
   Handle a given a webhook notification and generate github statuses
   """
+  @spec investigate(%Funnel.Scent{}) :: any
   def investigate(scent) do
     tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
     cond do
