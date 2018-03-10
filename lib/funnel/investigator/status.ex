@@ -1,4 +1,7 @@
 defmodule Funnel.Investigator.Status do
+  @moduledoc """
+  Helper functions for creating commit statuses 
+  """
 
   def pending do
     %{

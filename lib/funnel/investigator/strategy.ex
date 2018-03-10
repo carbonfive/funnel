@@ -1,11 +1,20 @@
 defmodule Funnel.Investigator.Strategy do
+  @moduledoc """
+  A collection of different modules used to _investigate_ (aka audit) a given `scent`.
+  """
+
   alias Funnel.Investigator.Helpers
   alias Funnel.Investigator.Status
 
   defmodule Sawtooth do
+    @moduledoc """
+    The Sawtooth strategy is a combination of squashing *and* rebasing, resulting in a "sawtooth" development branch shape.
+    """
+
     alias Tentacat.Repositories
     alias Tentacat.Commits
 
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
@@ -25,9 +34,14 @@ defmodule Funnel.Investigator.Strategy do
   end
 
   defmodule Squash do
+    @moduledoc """
+    The Squash strategy ensures there is only one commit in a given pull request.
+    """
+
     alias Tentacat.Repositories
     alias Tentacat.Pulls
 
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
@@ -46,9 +60,13 @@ defmodule Funnel.Investigator.Strategy do
   end
 
   defmodule Rebase do
+    @moduledoc """
+    The Rebase strategy ensures a given pull request is rebased on the base (aka target) branch.
+    """
     alias Tentacat.Repositories
     alias Tentacat.Pulls
 
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
