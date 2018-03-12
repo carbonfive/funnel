@@ -17,12 +17,12 @@ defmodule Funnel.GitHubAuth do
     Client.new(%{jwt: Jwt.get_jwt()})
   end
 
-  @spec get_user_client(charlist) :: %Tentacat.Client{}
+  @spec get_user_client(binary) :: %Tentacat.Client{}
   def get_user_client(access_token) do
     Client.new(%{access_token: access_token})
   end
 
-  @spec get_installation_access_token(integer) :: charlist
+  @spec get_installation_access_token(integer) :: binary
   defp get_installation_access_token(id) do
     elem(App.Installations.token(id, get_app_client()), 1)["token"]
   end

@@ -14,7 +14,7 @@ defmodule Funnel.Investigator.Strategy do
     alias Tentacat.Repositories
     alias Tentacat.Commits
 
-    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: any
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
@@ -41,7 +41,7 @@ defmodule Funnel.Investigator.Strategy do
     alias Tentacat.Repositories
     alias Tentacat.Pulls
 
-    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: any
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
@@ -66,7 +66,7 @@ defmodule Funnel.Investigator.Strategy do
     alias Tentacat.Repositories
     alias Tentacat.Pulls
 
-    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: none
+    @spec investigate_push(%Funnel.Scent{}, %Tentacat.Client{}) :: any
     def investigate_push(scent, tenta_client) do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
