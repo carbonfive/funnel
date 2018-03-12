@@ -22,7 +22,7 @@ defmodule Funnel.Scent do
     :pr_number
   ]
 
-  @spec get_scent(%{}, charlist) :: %__MODULE__{}
+  @spec get_scent(%{}, binary) :: %__MODULE__{}
   def get_scent(params, event_type) do
     case event_type do
       "push" -> get_scent_from_push(params)
