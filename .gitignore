@@ -26,5 +26,4 @@ npm-debug.log
 # variables.
 /config/*.secret.exs
 
-/key.pem
-/.env
+/.envrc

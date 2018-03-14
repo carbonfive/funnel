@@ -30,7 +30,13 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 
 ### Environment
 
-An example of an .env file.
+Use [direnv](https://github.com/direnv/direnv) to manage local env variables.
+
+```bash
+brew install direnv
+```
+
+An example of an .envrc file.
 
 ```bash
 export GITHUB_APP_ID=6615
