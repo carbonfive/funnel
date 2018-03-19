@@ -21,7 +21,7 @@ defmodule Funnel.PlatterTest do
 
   test "get_user_installations/1" do
     use_cassette "list_installations_for_user" do
-      assert Enum.count(Platter.get_user_installations("t0k3nstr1ng")) === 2
+      assert Enum.count(Platter.get_user_installations("t0k3nstr1ng")) === 1
     end
   end
 

@@ -1,4 +1,4 @@
-<h2>[Repository Name Here]</h2>
+<h2><%= @repository.details.owner <> "/" <> @repository.details.name %></h2>
 
 <table class="table">
   <thead>
@@ -7,6 +7,14 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>
+        <span>GitHub Repository Name</span>
+      </td>
+      <td>
+        <span><%= @repository.details.owner <> "/" <> @repository.details.name %></span>
+      </td>
+    </tr>
     <tr>
       <td>
         <span>GitHub ID</span>

@@ -10,7 +10,10 @@
 <%= for repository <- @repositories do %>
     <tr>
       <td>
-        <span><%= repository.git_hub_id %></span>
+        <span><%= repository.details.owner %></span>
+      </td>
+      <td>
+        <span><%= repository.details.name %></span>
       </td>
       <td class="text-right">
         <span><%= link "Show", to: repositories_path(@conn, :show, repository), class: "btn btn-default btn-xs" %></span>

@@ -7,8 +7,8 @@ defmodule Funnel.GitHubTest do
     alias Funnel.GitHub.Repository
 
     @valid_attrs %{git_hub_id: 123456}
-    @update_attrs %{git_hub_id: 654321}
-    @invalid_attrs %{git_hub_id: nil}
+    @update_attrs %{git_hub_id: 654321, details: %{owner: "sara", name: "zac"}}
+    @invalid_attrs %{git_hub_id: nil, details: nil}
 
     def repository_fixture(attrs \\ %{}) do
       {:ok, repository} =
@@ -31,7 +31,7 @@ defmodule Funnel.GitHubTest do
 
     test "create_repository/1 with valid data creates a repository" do
       assert {:ok, %Repository{} = repository} = GitHub.create_repository(@valid_attrs)
-      assert repository.git_hub_id == 123456
+      assert repository.git_hub_id == @valid_attrs.git_hub_id
     end
 
     test "get_or_create_repository_with_git_hub_id/1 finds an exisiting repository" do
@@ -40,8 +40,7 @@ defmodule Funnel.GitHubTest do
     end
 
     test "get_or_create_repository_with_git_hub_id/1 creates a new repository" do
-      assert {:ok, %Repository{} = repository} = GitHub.get_or_create_repository_with_git_hub_id(123456)
-      assert repository.git_hub_id == 123456
+      assert (GitHub.get_or_create_repository_with_git_hub_id(@valid_attrs.git_hub_id)).git_hub_id == @valid_attrs.git_hub_id
     end
 
     test "create_repository/1 with invalid data returns error changeset" do
@@ -51,7 +50,7 @@ defmodule Funnel.GitHubTest do
     test "update_repository/2 with valid data updates the repository" do
       repository = repository_fixture()
       assert {:ok, repository} = GitHub.update_repository(repository, @update_attrs)
-      assert repository.git_hub_id == 654321
+      assert repository.git_hub_id == @update_attrs.git_hub_id
     end
 
     test "update_repository/2 with invalid data returns error changeset" do
