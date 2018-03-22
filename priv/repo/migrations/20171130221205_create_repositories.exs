@@ -9,9 +9,9 @@ defmodule Funnel.Repo.Migrations.CreateRepositories do
 
     create unique_index(:repositories, :git_hub_id)
 
-    create table(:repositories_strategies) do
-      add :repository_id, references(:repositories)
-      add :strategy_id, references(:strategies)
+    create table(:repositories_strategies, primary_key: false) do
+      add :repository_id, references(:repositories), null: false
+      add :strategy_id, references(:strategies), null: false
     end
 
     create unique_index(:repositories_strategies, [:repository_id, :strategy_id])

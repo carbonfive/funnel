@@ -26,7 +26,8 @@ defmodule Funnel.Platter do
     end)
     |> List.flatten
     |> Enum.map(fn(git_hub_id_and_details) ->
-      GitHub.get_or_create_repository_with_git_hub_id(elem(git_hub_id_and_details, 0))
+      elem(git_hub_id_and_details, 0)
+      |> GitHub.get_or_create_repository_with_git_hub_id()
       |> Ecto.Changeset.change()
       |> Ecto.Changeset.put_embed(:details, elem(git_hub_id_and_details, 1))
       |> Funnel.Repo.update!()

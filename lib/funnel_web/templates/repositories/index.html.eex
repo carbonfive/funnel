@@ -1,4 +1,4 @@
-<h2>Listing Repositories</h2>
+<h2>Repositories</h2>
 
 <table class="table">
   <thead>
@@ -17,6 +17,7 @@
       </td>
       <td class="text-right">
         <span><%= link "Show", to: repositories_path(@conn, :show, repository), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: repositories_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %></span>
       </td>
     </tr>
 <% end %>

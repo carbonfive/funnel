@@ -1,4 +1,4 @@
-<h2><%= @repository.details.owner <> "/" <> @repository.details.name %></h2>
+<h2><%= repository_name(@repository) %></h2>
 
 <table class="table">
   <thead>
@@ -12,15 +12,7 @@
         <span>GitHub Repository Name</span>
       </td>
       <td>
-        <span><%= @repository.details.owner <> "/" <> @repository.details.name %></span>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <span>GitHub ID</span>
-      </td>
-      <td>
-        <span><%= @repository.git_hub_id %></span>
+        <span><%= repository_name(@repository) %></span>
       </td>
     </tr>
     <tr>
@@ -28,7 +20,7 @@
         <span>Git Strategy</span>
       </td>
       <td>
-        <span><%= @repository.strategy %></span>
+        <span><%= repository_strategy_name(@repository) %></span>
       </td>
     </tr>
   </tbody>

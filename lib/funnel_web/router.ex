@@ -18,7 +18,7 @@ defmodule FunnelWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/repositories", RepositoriesController, only: [:index, :show]
+    resources "/repositories", RepositoriesController, only: [:index, :show, :edit, :update]
   end
 
   # Other scopes may use custom stacks.

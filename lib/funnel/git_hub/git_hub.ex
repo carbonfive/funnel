@@ -7,6 +7,7 @@ defmodule Funnel.GitHub do
   alias Funnel.Repo
 
   alias Funnel.GitHub.Repository
+  alias Funnel.Git
 
   @doc """
   Returns the list of repositories.
@@ -46,10 +47,13 @@ defmodule Funnel.GitHub do
       %Repository{git_hub_id: 123}
 
   """
-  def get_or_create_repository_with_git_hub_id(git_hub_id) do
+  @spec get_or_create_repository_with_git_hub_id(integer, map) :: %Repository{}
+  def get_or_create_repository_with_git_hub_id(git_hub_id, attrs \\ %{}) do
     case Repo.get_by(Repository, git_hub_id: git_hub_id) do
       nil ->
-        elem(create_repository(%{git_hub_id: git_hub_id}), 1)
+        create_repository(Map.merge(attrs, %{git_hub_id: git_hub_id}))
+        # this `elem` is probably bad—-we should do better error handling
+        |> elem(1)
       repository ->
         repository
     end
@@ -88,6 +92,14 @@ defmodule Funnel.GitHub do
   def update_repository(%Repository{} = repository, attrs) do
     repository
     |> Repository.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @spec update_repository_strategy(%Repository{}, %Git.Strategy{}) :: %Repository{}
+  def update_repository_strategy(repository, strategy) do
+    repository
+    |> Repository.changeset(%{})
+    |> Ecto.Changeset.put_assoc(:strategies, [strategy])
     |> Repo.update()
   end
 

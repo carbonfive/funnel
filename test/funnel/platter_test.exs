@@ -1,5 +1,6 @@
 defmodule Funnel.PlatterTest do
   use ExUnit.Case, async: false
+  use Funnel.DataCase
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
   alias Funnel.Platter
   import Mock
@@ -28,6 +29,12 @@ defmodule Funnel.PlatterTest do
   test "get_user_repositories_for_installation/2" do
     use_cassette "list_installation_repositories_for_user" do
       assert Enum.count(Platter.get_user_repositories_for_installation(66216, "t0k3nstr1ng")) === 2
+    end
+  end
+
+  test "get_all_user_repositories/1" do
+    use_cassette "get_all_user_repositories" do
+      assert Enum.count(Platter.get_all_user_repositories("t0k3nstr1ng")) === 2
     end
   end
 
