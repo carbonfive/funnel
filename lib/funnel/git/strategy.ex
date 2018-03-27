@@ -7,7 +7,7 @@ defmodule Funnel.Git.Strategy do
   schema "strategies" do
     field :description, :string
     field :name, :string
-    many_to_many :repositories, Funnel.GitHub.Repository, join_through: "repositories_strategies"
+    has_many :repositories, Funnel.GitHub.Repository
 
     timestamps()
   end

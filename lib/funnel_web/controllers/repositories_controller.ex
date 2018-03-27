@@ -5,18 +5,20 @@ defmodule FunnelWeb.RepositoriesController do
   alias Funnel.Git
   alias Funnel.Repo
 
+  plug :scrub_params, "repository" when action in [:update]
+
   def index(conn, _params) do
     repositories = Platter.get_all_user_repositories(get_session(conn, :git_hub_access_token))
     render(conn, "index.html", repositories: repositories)
   end
 
   def show(conn, %{"id" => id}) do
-    repository = Repo.preload(GitHub.get_repository!(id), :strategies)
+    repository = Repo.preload(GitHub.get_repository!(id), :strategy)
     render(conn, "show.html", repository: repository)
   end
 
   def edit(conn, %{"id" => id}) do
-    repository = Repo.preload(GitHub.get_repository!(id), :strategies)
+    repository = Repo.preload(GitHub.get_repository!(id), :strategy)
     strategies = Git.list_strategies()
     changeset = GitHub.change_repository(repository)
     render(
@@ -27,7 +29,7 @@ defmodule FunnelWeb.RepositoriesController do
   end
 
   def update(conn, %{"id" => id, "repository" => repository_params}) do
-    repository = Repo.preload(GitHub.get_repository!(id), :strategies)
+    repository = Repo.preload(GitHub.get_repository!(id), :strategy)
     strategies = Git.list_strategies()
 
     case GitHub.update_repository(repository, repository_params) do

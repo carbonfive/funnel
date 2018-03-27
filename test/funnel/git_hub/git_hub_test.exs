@@ -2,12 +2,19 @@ defmodule Funnel.GitHubTest do
   use Funnel.DataCase
 
   alias Funnel.GitHub
+  alias Funnel.Git
 
   describe "repositories" do
+
+    setup do
+      {:ok, strategy} = Git.create_strategy(%{name: "my strat"})
+      {:ok, strategy: strategy}
+    end
+
     alias Funnel.GitHub.Repository
 
     @valid_attrs %{git_hub_id: 123456}
-    @update_attrs %{git_hub_id: 654321, details: %{owner: "sara", name: "zac"}}
+    @update_attrs %{git_hub_id: 654321, strategy_id: nil, details: %{owner: "sara", name: "zac"}}
     @invalid_attrs %{git_hub_id: nil, details: nil}
 
     def repository_fixture(attrs \\ %{}) do
@@ -47,9 +54,9 @@ defmodule Funnel.GitHubTest do
       assert {:error, %Ecto.Changeset{}} = GitHub.create_repository(@invalid_attrs)
     end
 
-    test "update_repository/2 with valid data updates the repository" do
+    test "update_repository/2 with valid data updates the repository", ctx do
       repository = repository_fixture()
-      assert {:ok, repository} = GitHub.update_repository(repository, @update_attrs)
+      assert {:ok, repository} = GitHub.update_repository(repository, %{@update_attrs | strategy_id: ctx[:strategy].id})
       assert repository.git_hub_id == @update_attrs.git_hub_id
     end
 

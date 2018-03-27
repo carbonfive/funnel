@@ -6,7 +6,7 @@ defmodule Funnel.GitHub.Repository do
 
   schema "repositories" do
     field :git_hub_id, :integer, nil: false
-    many_to_many :strategies, Funnel.Git.Strategy, join_through: "repositories_strategies"
+    belongs_to :strategy, Funnel.Git.Strategy
     embeds_one :details, Funnel.GitHub.RepositoryDetails, on_replace: :update
 
     timestamps()
@@ -15,10 +15,10 @@ defmodule Funnel.GitHub.Repository do
   @doc false
   def changeset(%Repository{} = repository, attrs) do
     repository
-    |> cast(attrs, [:git_hub_id])
+    |> cast(attrs, [:git_hub_id, :strategy_id])
     |> cast_embed(:details)
+    |> foreign_key_constraint(:strategy_id)
     |> unique_constraint(:git_hub_id)
     |> validate_required(:git_hub_id)
-    |> validate_length(:strategies, max: 1)
   end
 end
