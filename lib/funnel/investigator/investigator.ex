@@ -12,6 +12,7 @@ defmodule Funnel.Investigator do
     cond do
       Helpers.is_notable_action?(scent) ->
         Strategy.Sawtooth.investigate_push(scent, tenta_client)
+      # if its not a notable action, then its a push event
       true ->
         Helpers.fail_open_pull_requests(scent, tenta_client)
     end
