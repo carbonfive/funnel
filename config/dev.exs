@@ -15,6 +15,7 @@ config :funnel, FunnelWeb.Endpoint,
                     cd: Path.expand("../assets", __DIR__)]]
 
 config :funnel, github_app_id: 6615
+config :funnel, oauth_redirect_uri: "https://funnel.ngrok.io/auth/callback"
 
 # ## SSL Support
 #

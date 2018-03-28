@@ -10,7 +10,7 @@ defmodule Funnel.GitHubAuth.OAuth do
       strategy: __MODULE__,
       client_id: System.get_env("GITHUB_OAUTH_CLIENT_ID"),
       client_secret: System.get_env("GITHUB_OAUTH_CLIENT_SECRET"),
-      redirect_uri: "https://funnel-c5.herokuapp.com/auth/callback",
+      redirect_uri: Application.get_env(:funnel, :oauth_redirect_uri),
       site: "https://api.github.com",
       authorize_url: "https://github.com/login/oauth/authorize",
       token_url: "https://github.com/login/oauth/access_token"
