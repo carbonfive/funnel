@@ -27,3 +27,7 @@ npm-debug.log
 /config/*.secret.exs
 
 /.envrc
+/key.pem
+/.env-prod
+/key-test.pem
+/.env-test

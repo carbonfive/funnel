@@ -2,10 +2,9 @@
 #
 #     mix run priv/repo/seeds.exs
 #
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Funnel.Repo.insert!(%Funnel.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+
+alias Funnel.Repo
+
+Repo.insert!(%Funnel.Git.Strategy{name: "Rebase"})
+Repo.insert!(%Funnel.Git.Strategy{name: "Squash"})
+Repo.insert!(%Funnel.Git.Strategy{name: "Sawtooth"})

@@ -1,0 +1,30 @@
+<h2><%= repository_name(@repository) %></h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span>GitHub Repository Name</span>
+      </td>
+      <td>
+        <span><%= repository_name(@repository) %></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span>Git Strategy</span>
+      </td>
+      <td>
+        <span><%= repository_strategy_name(@repository) %></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<span><%= link "Back", to: repositories_path(@conn, :index) %></span>
