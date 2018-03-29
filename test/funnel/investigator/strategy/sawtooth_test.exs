@@ -34,7 +34,7 @@ defmodule Funnel.Investigator.Strategy.SawtoothTest do
           build(:bad_push_scent).owner_login,
           build(:bad_push_scent).repo_name,
           build(:bad_push_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be rebased and squashed"),
           :_
         )
       end
@@ -58,7 +58,7 @@ defmodule Funnel.Investigator.Strategy.SawtoothTest do
           build(:good_push_scent).owner_login,
           build(:good_push_scent).repo_name,
           build(:good_push_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be rebased and squashed"),
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(

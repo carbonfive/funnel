@@ -34,7 +34,7 @@ defmodule Funnel.Investigator.Strategy.RebaseTest do
           build(:rebase_bad_scent).owner_login,
           build(:rebase_bad_scent).repo_name,
           build(:rebase_bad_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be rebased"),
           :_
         )
       end
@@ -58,7 +58,7 @@ defmodule Funnel.Investigator.Strategy.RebaseTest do
           build(:rebase_good_scent).owner_login,
           build(:rebase_good_scent).repo_name,
           build(:rebase_good_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be rebased"),
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(

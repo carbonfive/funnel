@@ -11,19 +11,20 @@ defmodule Funnel.Investigator.Helpers do
   @doc """
   fails the latest commit of every open pull request targeted to this branch
   """
-  @spec fail_open_pull_requests(%Funnel.Scent{}, %Tentacat.Client{}) :: any
-  def fail_open_pull_requests(scent, tenta_client) do
+  @spec fail_open_pull_requests(binary, %Funnel.Scent{}, %Tentacat.Client{}) :: atom
+  def fail_open_pull_requests(message, scent, tenta_client) do
     # get all prs that are targeted to this branch
     Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name}, tenta_client)
     # and mark them failed
     |> Enum.map(
       fn(b) ->
         Task.async fn ->
-          Repositories.Statuses.create scent.owner_login, scent.repo_name, b["head"]["sha"], Status.failure(), tenta_client
+          Repositories.Statuses.create scent.owner_login, scent.repo_name, b["head"]["sha"], Status.failure(message), tenta_client
         end
       end
     )
     |> Task.yield_many(10000)
+    :ok
   end
 
   @spec mark_commit_pending(%Funnel.Scent{}, %Tentacat.Client{}) :: any
@@ -31,7 +32,7 @@ defmodule Funnel.Investigator.Helpers do
     Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending(), tenta_client
   end
 
-  @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: charlist
+  @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: binary
   def get_base_sha(scent, tenta_client) do
     # see if there's a pull request open for this branch
     List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, tenta_client))["base"]["sha"]

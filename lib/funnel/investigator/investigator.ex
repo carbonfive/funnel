@@ -5,20 +5,24 @@ defmodule Funnel.Investigator do
   alias Funnel.Investigator.Helpers
   alias Funnel.Investigator.Status
   alias Tentacat.Repositories
+  require Logger
 
   @doc """
   Handle a given a webhook notification and generate github statuses
   """
-  @spec investigate(%Funnel.Scent{}) :: any
+  @spec investigate(%Funnel.Scent{}) :: atom
   def investigate(scent) do
     tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
+    Logger.debug "Investigating #{inspect(scent)}"
     cond do
       Helpers.is_notable_action?(scent) and repository_has_strategy(scent)
         -> apply(strategy_module(scent), :investigate_push, [scent, tenta_client])
       Helpers.is_notable_action?(scent)
         -> Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending_strategy, tenta_client
+      repository_has_strategy(scent)
+        -> Helpers.fail_open_pull_requests("This branch must updated", scent, tenta_client)
       true
-        -> Helpers.fail_open_pull_requests(scent, tenta_client)
+        -> :noop
     end
   end
 

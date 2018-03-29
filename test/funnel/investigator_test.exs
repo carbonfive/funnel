@@ -8,7 +8,7 @@ defmodule Funnel.InvestigatorTest do
 
   describe "when there's a sawtooth strategy repository" do
     setup_with_mocks(mocks()) do
-      push_scent = build(:push_scent)
+      push_scent = build(:good_push_scent)
       {:ok, strategy} = Git.create_strategy(%{
         name: "sawtooth"
         })
@@ -24,13 +24,13 @@ defmodule Funnel.InvestigatorTest do
       assert called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
-      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
   describe "when there's a squash strategy repository" do
     setup_with_mocks(mocks()) do
-      push_scent = build(:push_scent)
+      push_scent = build(:good_push_scent)
       {:ok, strategy} = Git.create_strategy(%{
         name: "squash"
         })
@@ -46,18 +46,18 @@ defmodule Funnel.InvestigatorTest do
       assert called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
-      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
-  describe "when there's no record for repository" do
+  describe "when action is notable and there's no record for repository" do
     setup_with_mocks([{
       Tentacat.Repositories.Statuses, [],
       [
         create: fn(_, _, _, _, _) -> :ok end
       ]
       } | mocks()]) do
-      push_scent = build(:push_scent)
+      push_scent = build(:good_push_scent)
       {:ok, %{push_scent: push_scent}}
     end
 
@@ -67,18 +67,18 @@ defmodule Funnel.InvestigatorTest do
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
-      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
-  describe "when there's no strategy preference stored for repository" do
+  describe "when action is notable and there's no strategy preference stored for repository" do
     setup_with_mocks([{
       Tentacat.Repositories.Statuses, [],
       [
         create: fn(_, _, _, _, _) -> :ok end
       ]
       } | mocks()]) do
-      push_scent = build(:push_scent)
+      push_scent = build(:good_push_scent)
       {:ok, repository} = GitHub.create_repository(%{git_hub_id: push_scent.repo_id})
       {:ok, %{push_scent: push_scent, repository: repository}}
     end
@@ -89,13 +89,13 @@ defmodule Funnel.InvestigatorTest do
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
-      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
-  describe "when there's a rebase strategy repository" do
+  describe "when action is notable and a rebase strategy repository" do
     setup_with_mocks(mocks()) do
-      push_scent = build(:push_scent)
+      push_scent = build(:good_push_scent)
       {:ok, strategy} = Git.create_strategy(%{
         name: "rebase"
         })
@@ -106,27 +106,49 @@ defmodule Funnel.InvestigatorTest do
       {:ok, %{push_scent: push_scent, strategy: strategy, repository: repository}}
     end
 
-    test "calls rebase investigate when action is notable", ctx do
+    test "calls rebase investigate ", ctx do
       Investigator.investigate(ctx.push_scent)
       assert called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
-      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
-  describe "when the action is not notable" do
+  describe "when the action is not notable and there is no repository record" do
     setup_with_mocks(mocks(false)) do
       push_scent = build(:push_scent)
       {:ok, %{push_scent: push_scent}}
     end
 
-    test "fails related open pull requests when action is not notable", ctx do
-      Investigator.investigate(build(:push_scent))
+    test "it does nothing", ctx do
+      res = Investigator.investigate(ctx.push_scent)
+      assert res == :noop
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
-      assert called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
+    end
+  end
+
+  describe "when the action is not notable and there is a repository strategy" do
+    setup_with_mocks(mocks(false)) do
+      push_scent = build(:push_scent)
+      {:ok, strategy} = Git.create_strategy(%{name: "rebase"})
+      {:ok, repository} = GitHub.create_repository(%{
+          git_hub_id: push_scent.repo_id,
+          strategy_id: strategy.id
+        })
+      {:ok, %{push_scent: push_scent, strategy: strategy, repository: repository}}
+    end
+
+    test "it fails open pull requests", ctx do
+      res = Investigator.investigate(ctx.push_scent)
+      refute res == :noop
+      refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
+      assert called Investigator.Helpers.fail_open_pull_requests(:_, ctx.push_scent, :_)
     end
   end
 
@@ -139,7 +161,7 @@ defmodule Funnel.InvestigatorTest do
         ]},
       {Investigator.Helpers, [:passthrough],
         [
-          fail_open_pull_requests: fn(_, _) -> :noop end,
+          fail_open_pull_requests: fn(_, _, _) -> :ok end,
           is_notable_action?: fn(_) -> is_notable end
         ]
       },

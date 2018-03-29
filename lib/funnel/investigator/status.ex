@@ -3,6 +3,7 @@ defmodule Funnel.Investigator.Status do
   Helper functions for creating commit statuses
   """
 
+  @spec pending() :: map
   def pending do
     %{
        "state": "pending",
@@ -11,6 +12,7 @@ defmodule Funnel.Investigator.Status do
      }
   end
 
+  @spec pending_strategy() :: map
   def pending_strategy do
     %{
        "state": "pending",
@@ -19,6 +21,7 @@ defmodule Funnel.Investigator.Status do
      }
   end
 
+  @spec success() :: map
   def success do
     %{
        "state": "success",
@@ -27,10 +30,11 @@ defmodule Funnel.Investigator.Status do
      }
   end
 
-  def failure do
+  @spec failure(binary) :: map
+  def failure(message \\ "Branch must be updated according to strategy") do
     %{
        "state": "failure",
-       "description": "Branch must be rebased and squashed",
+       "description": message,
        "context": "funnel"
      }
   end

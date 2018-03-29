@@ -15,7 +15,7 @@ defmodule Funnel.Investigator.HelpersTest do
       {Tentacat.Repositories.Statuses, [:passthrough], []}
     ]) do
       use_cassette "default_branch_pushed" do
-        Funnel.Investigator.Helpers.fail_open_pull_requests build(:push_scent), @tenta_client
+        Funnel.Investigator.Helpers.fail_open_pull_requests build(:failure_status).description, build(:push_scent), @tenta_client
 
         refute called Tentacat.Repositories.Statuses.create(
           build(:push_scent).owner_login,
