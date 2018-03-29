@@ -1,12 +1,20 @@
 defmodule Funnel.Investigator.Status do
   @moduledoc """
-  Helper functions for creating commit statuses 
+  Helper functions for creating commit statuses
   """
 
   def pending do
     %{
        "state": "pending",
        "description": "Investigating your branch",
+       "context": "funnel"
+     }
+  end
+
+  def pending_strategy do
+    %{
+       "state": "pending",
+       "description": "No strategy is configured for this repository",
        "context": "funnel"
      }
   end

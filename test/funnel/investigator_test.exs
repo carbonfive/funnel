@@ -50,6 +50,49 @@ defmodule Funnel.InvestigatorTest do
     end
   end
 
+  describe "when there's no record for repository" do
+    setup_with_mocks([{
+      Tentacat.Repositories.Statuses, [],
+      [
+        create: fn(_, _, _, _, _) -> :ok end
+      ]
+      } | mocks()]) do
+      push_scent = build(:push_scent)
+      {:ok, %{push_scent: push_scent}}
+    end
+
+    test "sends pending status", ctx do
+      Investigator.investigate(ctx.push_scent)
+      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy, :_)
+      refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+    end
+  end
+
+  describe "when there's no strategy preference stored for repository" do
+    setup_with_mocks([{
+      Tentacat.Repositories.Statuses, [],
+      [
+        create: fn(_, _, _, _, _) -> :ok end
+      ]
+      } | mocks()]) do
+      push_scent = build(:push_scent)
+      {:ok, repository} = GitHub.create_repository(%{git_hub_id: push_scent.repo_id})
+      {:ok, %{push_scent: push_scent, repository: repository}}
+    end
+
+    test "sends pending status", ctx do
+      Investigator.investigate(ctx.push_scent)
+      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy, :_)
+      refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
+      refute called Investigator.Helpers.fail_open_pull_requests(ctx.push_scent, :_)
+    end
+  end
+
   describe "when there's a rebase strategy repository" do
     setup_with_mocks(mocks()) do
       push_scent = build(:push_scent)
