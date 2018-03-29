@@ -63,7 +63,7 @@ defmodule Funnel.InvestigatorTest do
 
     test "sends pending status", ctx do
       Investigator.investigate(ctx.push_scent)
-      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy, :_)
+      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy(FunnelWeb.Router.Helpers.repositories_url(FunnelWeb.Endpoint, :index)), :_)
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)
@@ -85,7 +85,7 @@ defmodule Funnel.InvestigatorTest do
 
     test "sends pending status", ctx do
       Investigator.investigate(ctx.push_scent)
-      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy, :_)
+      assert called Tentacat.Repositories.Statuses.create(:_, :_, :_, Investigator.Status.pending_strategy(FunnelWeb.Router.Helpers.repositories_url(FunnelWeb.Endpoint, :edit, ctx.repository.id)), :_)
       refute called Investigator.Strategy.Sawtooth.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Squash.investigate_push(ctx.push_scent, :_)
       refute called Investigator.Strategy.Rebase.investigate_push(ctx.push_scent, :_)

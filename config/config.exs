@@ -12,6 +12,8 @@ config :tentacat, extra_headers: [{"Accept", "application/vnd.github.machine-man
 config :funnel,
   ecto_repos: [Funnel.Repo]
 
+config :funnel, oauth_redirect_uri: "https://funnel.ngrok.io/auth/callback"
+
 # Configures the endpoint
 config :funnel, FunnelWeb.Endpoint,
   url: [host: "localhost"],

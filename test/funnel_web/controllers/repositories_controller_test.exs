@@ -20,7 +20,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
          [get_all_user_repositories: fn(_) -> [] end]}
       ]) do
         conn = get conn, repositories_path(conn, :index)
-        assert html_response(conn, 200) =~ "Repositories"
+        assert html_response(conn, 302)
       end
     end
   end
