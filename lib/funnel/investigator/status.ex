@@ -12,12 +12,13 @@ defmodule Funnel.Investigator.Status do
      }
   end
 
-  @spec pending_strategy() :: map
-  def pending_strategy do
+  @spec pending_strategy(binary) :: map
+  def pending_strategy(url \\ nil) do
     %{
        "state": "pending",
        "description": "No strategy is configured for this repository",
-       "context": "funnel"
+       "context": "funnel",
+       "target_url": url
      }
   end
 
