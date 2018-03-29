@@ -27,6 +27,7 @@ defmodule Funnel.Factory do
       default_branch_name: "master",
       installation_id: 66216,
       branch_name: "bad-boy",
+      repo_id: 103584391
     }
   end
 
@@ -38,7 +39,8 @@ defmodule Funnel.Factory do
       installation_id: 66216,
       owner_login: "outofambit",
       branch_name: "good-boy",
-      repo_name: "musical-spork"
+      repo_name: "musical-spork",
+      repo_id: 103584391
     }
   end
 
@@ -51,7 +53,8 @@ defmodule Funnel.Factory do
       default_branch_name: "master",
       installation_id: 66216,
       branch_name: "gourd",
-      pr_number: 16
+      pr_number: 16,
+      repo_id: 103584391
     }
   end
 
@@ -64,7 +67,8 @@ defmodule Funnel.Factory do
       owner_login: "outofambit",
       branch_name: "pumpkin",
       repo_name: "musical-spork",
-      pr_number: 15
+      pr_number: 15,
+      repo_id: 103584391
     }
   end
 
@@ -77,7 +81,8 @@ defmodule Funnel.Factory do
       default_branch_name: "master",
       installation_id: 66216,
       branch_name: "ur_bases",
-      pr_number: 17
+      pr_number: 17,
+      repo_id: 103584391
     }
   end
 
@@ -90,18 +95,21 @@ defmodule Funnel.Factory do
       owner_login: "outofambit",
       branch_name: "my_bases",
       repo_name: "musical-spork",
-      pr_number: 18
+      pr_number: 18,
+      repo_id: 103584391
     }
   end
 
   def push_scent_factory do
     %Funnel.Scent{
+      action: nil,
       commit_sha: "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
       default_branch_name: "master",
       installation_id: 66216,
       owner_login: "outofambit",
       branch_name: "master",
-      repo_name: "musical-spork"
+      repo_name: "musical-spork",
+      repo_id: 103584391
     }
   end
 

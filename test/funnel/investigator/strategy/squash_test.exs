@@ -34,7 +34,7 @@ defmodule Funnel.Investigator.Strategy.SquashTest do
           build(:squash_bad_scent).owner_login,
           build(:squash_bad_scent).repo_name,
           build(:squash_bad_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be squashed"),
           :_
         )
       end
@@ -58,7 +58,7 @@ defmodule Funnel.Investigator.Strategy.SquashTest do
           build(:squash_good_scent).owner_login,
           build(:squash_good_scent).repo_name,
           build(:squash_good_scent).commit_sha,
-          build(:failure_status),
+          Funnel.Investigator.Status.failure("Branch must be squashed"),
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(

@@ -6,12 +6,14 @@ defmodule Funnel.ScentTest do
   test "get_scent push" do
     scent = Scent.get_scent build(:push_webhook_bad_body), "push"
     assert scent == %Funnel.Scent{
+      action: nil,
       owner_login: "outofambit",
       repo_name: "musical-spork",
       commit_sha: "6e669ab91b9cec1ff8bfcdd00dc18a87733269b1",
       default_branch_name: "master",
       installation_id: 65943,
       branch_name: "bad-boy",
+      repo_id: 103584391
     }
   end
 
@@ -25,7 +27,8 @@ defmodule Funnel.ScentTest do
       installation_id: 66216,
       owner_login: "outofambit",
       repo_name: "musical-spork",
-      pr_number: 12
+      pr_number: 12,
+      repo_id: 103584391
     }
   end
 

@@ -4,12 +4,14 @@ defmodule Funnel.Scent do
   """
 
   @enforce_keys [
+    :action,
     :owner_login,
     :repo_name,
     :commit_sha,
     :default_branch_name,
     :installation_id,
-    :branch_name
+    :branch_name,
+    :repo_id
   ]
   defstruct [
     :action,
@@ -19,7 +21,8 @@ defmodule Funnel.Scent do
     :default_branch_name,
     :installation_id,
     :branch_name,
-    :pr_number
+    :pr_number,
+    :repo_id
   ]
 
   @spec get_scent(%{}, binary) :: %__MODULE__{}
@@ -45,19 +48,22 @@ defmodule Funnel.Scent do
       default_branch_name: params["repository"]["default_branch"],
       installation_id: params["installation"]["id"],
       branch_name: params["pull_request"]["head"]["ref"],
-      pr_number: params["pull_request"]["number"]
+      pr_number: params["pull_request"]["number"],
+      repo_id: params["repository"]["id"]
     }
   end
 
   @spec get_scent_from_push(%{}) :: %__MODULE__{}
   defp get_scent_from_push(params) do
     %__MODULE__{
+      action: nil,
       owner_login: params["repository"]["owner"]["login"],
       repo_name: params["repository"]["name"],
       commit_sha: params["head_commit"]["id"],
       default_branch_name: params["repository"]["default_branch"],
       installation_id: params["installation"]["id"],
-      branch_name: List.last(String.split(params["ref"], "/"))
+      branch_name: List.last(String.split(params["ref"], "/")),
+      repo_id: params["repository"]["id"]
     }
   end
 
