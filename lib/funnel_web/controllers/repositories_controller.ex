@@ -8,8 +8,14 @@ defmodule FunnelWeb.RepositoriesController do
   plug :scrub_params, "repository" when action in [:update]
 
   def index(conn, _params) do
-    repositories = Platter.get_all_user_repositories(get_session(conn, :git_hub_access_token))
-    render(conn, "index.html", repositories: repositories)
+    alias FunnelWeb.Router.Helpers
+    case get_session(conn, :git_hub_access_token) do
+      nil ->
+        redirect(conn, to: Helpers.auth_path(conn, :login))
+      token ->
+        repositories = Platter.get_all_user_repositories(token)
+        render(conn, "index.html", repositories: repositories)
+    end
   end
 
   def show(conn, %{"id" => id}) do

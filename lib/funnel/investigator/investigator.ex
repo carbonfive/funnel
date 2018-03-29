@@ -42,12 +42,15 @@ defmodule Funnel.Investigator do
     end
   end
 
+  @spec repository_form_url(%Funnel.Scent{}) :: binary
   defp repository_form_url(scent) do
     alias FunnelWeb.Router.Helpers
     alias FunnelWeb.Endpoint
     case Repo.get_by(GitHub.Repository, git_hub_id: scent.repo_id) do
-      nil -> Helpers.repositories_url(Endpoint, :index)
-      repository -> Helpers.repositories_url(Endpoint, :edit, repository.id)
+      nil ->
+        Helpers.repositories_url(Endpoint, :index)
+      repository ->
+        Helpers.repositories_url(Endpoint, :edit, repository.id)
     end
   end
 
