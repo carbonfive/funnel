@@ -7,9 +7,12 @@ defmodule Funnel.Investigator.Helpers do
 
   alias Tentacat.Repositories
   alias Funnel.Investigator.Status
+  alias Funnel.GitHubAuth
+  alias Funnel.GitHub
+  alias Funnel.Repo
 
   @doc """
-  fails the latest commit of every open pull request targeted to this branch
+  # fails the latest commit of every open pull request targeted to this branch
   """
   @spec fail_open_pull_requests(binary, %Funnel.Scent{}, %Tentacat.Client{}) :: atom
   def fail_open_pull_requests(message, scent, tenta_client) do
@@ -41,5 +44,25 @@ defmodule Funnel.Investigator.Helpers do
   @spec is_notable_action?(%Funnel.Scent{}) :: boolean
   def is_notable_action?(scent) do
     Enum.member?(Application.get_env(:funnel, :notable_actions), scent.action)
+  end
+
+  @spec strategy_module(%Funnel.Scent{}) :: fun()
+  def strategy_module(scent) do
+    repository = Repo.get_by!(GitHub.Repository, git_hub_id: scent.repo_id)
+    repository = Repo.preload(repository, :strategy)
+    atom = String.to_existing_atom("Elixir.Funnel.Investigator.Strategy.#{String.capitalize(repository.strategy.name)}")
+    &(atom.investigate_push/2)
+  end
+
+  @spec get_open_pull_requests(%Funnel.GitHub.Repository{}) :: Tentacat.response
+  def get_open_pull_requests(repository) do
+    tenta_client = GitHubAuth.get_installation_client(repository.git_hub_installation_id)
+    Tentacat.Pulls.filter(repository.details.owner, repository.details.name, %{state: "open"}, tenta_client)
+  end
+
+  @spec get_scents_for_repository(%Funnel.GitHub.Repository{}) :: list(%Funnel.Scent{})
+  def get_scents_for_repository(repository) do
+    get_open_pull_requests(repository)
+    |> Enum.map(fn(el) -> Funnel.Scent.get_scent_from_pr(el, repository.git_hub_installation_id) end)
   end
 end

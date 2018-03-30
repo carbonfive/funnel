@@ -8,7 +8,6 @@ defmodule Funnel.Scent do
     :owner_login,
     :repo_name,
     :commit_sha,
-    :default_branch_name,
     :installation_id,
     :branch_name,
     :repo_id
@@ -68,6 +67,20 @@ defmodule Funnel.Scent do
       installation_id: params["installation"]["id"],
       branch_name: List.last(String.split(params["ref"], "/")),
       repo_id: params["repository"]["id"]
+    }
+  end
+
+  @spec get_scent_from_pr(map, number) :: %__MODULE__{}
+  def get_scent_from_pr(pull_request, installation_id) do
+    %__MODULE__{
+      action: nil,
+      repo_id: pull_request["head"]["repo"]["id"],
+      owner_login: pull_request["head"]["repo"]["owner"]["login"],
+      repo_name: pull_request["head"]["repo"]["name"],
+      commit_sha: pull_request["head"]["sha"],
+      installation_id: installation_id,
+      branch_name: pull_request["head"]["ref"],
+      pr_number: pull_request["number"]
     }
   end
 
