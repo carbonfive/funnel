@@ -49,6 +49,24 @@ defmodule Funnel.Platter do
     end)
   end
 
+  @spec user_has_git_hub_repository_access?(binary, integer) :: boolean
+  def user_has_git_hub_repository_access?(user_access_token, git_hub_id) do
+    user_access_token
+    |> get_user_repository_git_hub_ids()
+    |> Enum.member?(git_hub_id)
+  end
+
+  @spec get_user_repository_git_hub_ids(binary) :: list(integer)
+  defp get_user_repository_git_hub_ids(user_access_token) do
+    get_user_installations(user_access_token)
+    |> Enum.map(fn(installation) ->
+      get_user_repositories_for_installation(installation["id"], user_access_token)
+      |> Enum.map(fn(el) -> el["id"]
+      end)
+    end)
+    |> List.flatten
+  end
+
   @spec extract_repository_details_attrs(map, number) :: %{owner: binary, name: binary, git_hub_installation_id: number}
   defp extract_repository_details_attrs(response, installation_id) do
     %{ owner: response["owner"]["login"], name: response["name"], git_hub_installation_id: installation_id }
