@@ -30,6 +30,10 @@ defmodule Funnel.Scent do
     case event_type do
       "push" -> get_scent_from_push(params)
       "pull_request" -> get_scent_from_pull_request(params)
+      _ ->
+        require Logger
+        Logger.debug("Unkown event type: " <> event_type)
+        nil
     end
   end
 
