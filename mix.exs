@@ -12,7 +12,9 @@ defmodule Funnel.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env),
       aliases: aliases(),
       deps: deps(),
-      dialyzer: [plt_add_deps: :transitive]
+      dialyzer: [plt_add_deps: :transitive],
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
   end
 
@@ -52,7 +54,8 @@ defmodule Funnel.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:oauth2, "~> 0.9"},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.8", only: :test}
     ]
   end
 

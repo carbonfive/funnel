@@ -4,6 +4,7 @@ defmodule FunnelWeb.RepositoriesController do
   alias Funnel.GitHub
   alias Funnel.Git
   alias Funnel.Repo
+  alias Funnel.Investigator
 
   plug :scrub_params, "repository" when action in [:update]
 
@@ -37,9 +38,9 @@ defmodule FunnelWeb.RepositoriesController do
   def update(conn, %{"id" => id, "repository" => repository_params}) do
     repository = Repo.preload(GitHub.get_repository!(id), :strategy)
     strategies = Git.list_strategies()
-
     case GitHub.update_repository(repository, repository_params) do
       {:ok, repository} ->
+        Investigator.investigate_repository(repository)
         conn
         |> put_flash(:info, "Repository updated successfully.")
         |> redirect(to: repositories_path(conn, :show, repository))

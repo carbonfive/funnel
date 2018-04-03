@@ -4,7 +4,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
   import Mock
   alias Funnel.GitHub
 
-  @create_attrs %{git_hub_id: 123456}
+  @create_attrs %{git_hub_id: 123456, git_hub_installation_id: 66216}
   @update_attrs %{git_hub_id: 654321, details: %{owner: "sara", name: "zac"}}
   @invalid_attrs %{git_hub_id: nil, details: nil}
 
@@ -46,11 +46,16 @@ defmodule FunnelWeb.RepositoriesControllerTest do
     setup [:create_repository]
 
     test "redirects when data is valid", %{conn: conn, repository: repository} do
-      conn = put conn, repositories_path(conn, :update, repository), repository: @update_attrs
-      assert redirected_to(conn) == repositories_path(conn, :show, repository)
+      with_mocks([
+        {Funnel.Investigator, [],
+         [investigate_repository: fn(_) -> :ok end]}
+      ]) do
+        conn = put conn, repositories_path(conn, :update, repository), repository: @update_attrs
+        assert redirected_to(conn) == repositories_path(conn, :show, repository)
 
-      conn = get conn, repositories_path(conn, :show, repository)
-      assert html_response(conn, 200) =~ @update_attrs.details.owner <> "/" <> @update_attrs.details.name
+        conn = get conn, repositories_path(conn, :show, repository)
+        assert html_response(conn, 200) =~ @update_attrs.details.owner <> "/" <> @update_attrs.details.name
+      end
     end
 
     test "renders errors when data is invalid", %{conn: conn, repository: repository} do

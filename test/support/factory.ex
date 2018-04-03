@@ -113,6 +113,21 @@ defmodule Funnel.Factory do
     }
   end
 
+  def pr_scent_factory(attrs \\ %{}) do
+    %Funnel.Scent{
+      action: nil,
+      commit_sha: "4539a6f5eaa9bf4129753d6acc5a3dca6e7692fb",
+      default_branch_name: "master",
+      installation_id: 66216,
+      owner_login: "outofambit",
+      branch_name: "my_bases",
+      repo_name: "musical-spork",
+      pr_number: 18,
+      repo_id: 103584391
+    }
+    |> Map.merge(attrs)
+  end
+
   def success_status_factory do
     Funnel.Investigator.Status.success()
   end

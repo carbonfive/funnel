@@ -13,7 +13,7 @@ defmodule Funnel.GitHubTest do
 
     alias Funnel.GitHub.Repository
 
-    @valid_attrs %{git_hub_id: 123456}
+    @valid_attrs %{git_hub_id: 123456, git_hub_installation_id: 66216}
     @update_attrs %{git_hub_id: 654321, strategy_id: nil, details: %{owner: "sara", name: "zac"}}
     @invalid_attrs %{git_hub_id: nil, details: nil}
 
@@ -47,7 +47,7 @@ defmodule Funnel.GitHubTest do
     end
 
     test "get_or_create_repository_with_git_hub_id/1 creates a new repository" do
-      assert (GitHub.get_or_create_repository_with_git_hub_id(@valid_attrs.git_hub_id)).git_hub_id == @valid_attrs.git_hub_id
+      assert (GitHub.get_or_create_repository_with_git_hub_id(@valid_attrs.git_hub_id, %{git_hub_installation_id: 66216})).git_hub_id == @valid_attrs.git_hub_id
     end
 
     test "create_repository/1 with invalid data returns error changeset" do
