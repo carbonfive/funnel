@@ -34,14 +34,7 @@ Use [direnv](https://github.com/direnv/direnv) to manage local env variables. Or
 brew install direnv
 ```
 
-An example of an .envrc file.
-
-```bash
-export GITHUB_APP_ID=6615
-export GITHUB_PRIVATE_KEY=5537sdkbhj
-export GITHUB_OAUTH_CLIENT_ID=skjsdf
-export GITHUB_OAUTH_CLIENT_SECRET=9872345kbjh
-```
+See `.envrc-sample` for en example.
 
 #### Running
 
