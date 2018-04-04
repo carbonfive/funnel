@@ -38,7 +38,8 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: binary
   def get_base_sha(scent, tenta_client) do
     # see if there's a pull request open for this branch
-    List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, tenta_client))["base"]["sha"]
+    base_branch_name = List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, tenta_client))["base"]["ref"]
+    Tentacat.Repositories.Branches.find(scent.owner_login, scent.repo_name, base_branch_name, tenta_client)["commit"]["sha"]
   end
 
   @spec is_notable_action?(%Funnel.Scent{}) :: boolean
