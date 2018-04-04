@@ -2,6 +2,8 @@
 
 **A little CI service that makes sure your pull request is ready according to the git practices of your team.**
 
+![Image of Vaporeon](https://funnel-c5.herokuapp.com/images/vaporeon-small.png)
+
 ## Using funnel on a project
 
 1. Visit the Funnel app listing: [https://github.com/apps/funnel](https://github.com/apps/funnel)
