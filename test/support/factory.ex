@@ -21,6 +21,7 @@ defmodule Funnel.Factory do
   def bad_push_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       owner_login: "outofambit",
       repo_name: "musical-spork",
       commit_sha: "029d4f9cc14efdfd69c326839809954844925370",
@@ -34,6 +35,7 @@ defmodule Funnel.Factory do
   def good_push_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       commit_sha: "6b7d4200317e2b5e2cad2b19a22e7ad8e8add382",
       default_branch_name: "master",
       installation_id: 66216,
@@ -47,6 +49,7 @@ defmodule Funnel.Factory do
   def squash_bad_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       owner_login: "outofambit",
       repo_name: "musical-spork",
       commit_sha: "81a51b820132a9d04c67d8672a854e4124da429b",
@@ -61,6 +64,7 @@ defmodule Funnel.Factory do
   def squash_good_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       commit_sha: "314ab2003646f65efda4917433342e3c33f3eba8",
       default_branch_name: "master",
       installation_id: 66216,
@@ -75,6 +79,7 @@ defmodule Funnel.Factory do
   def rebase_bad_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       owner_login: "outofambit",
       repo_name: "musical-spork",
       commit_sha: "a97b89ebb1505b0e3d79b573c852c980b132330b",
@@ -89,6 +94,7 @@ defmodule Funnel.Factory do
   def rebase_good_scent_factory do
     %Funnel.Scent{
       action: "synchronize",
+      type: :pull_request,
       commit_sha: "4539a6f5eaa9bf4129753d6acc5a3dca6e7692fb",
       default_branch_name: "master",
       installation_id: 66216,
@@ -103,6 +109,7 @@ defmodule Funnel.Factory do
   def push_scent_factory do
     %Funnel.Scent{
       action: nil,
+      type: :push,
       commit_sha: "966bf60dcd5b7eb57997ae88ef2e46f6549a9c8a",
       default_branch_name: "master",
       installation_id: 66216,
@@ -116,6 +123,7 @@ defmodule Funnel.Factory do
   def pr_scent_factory(attrs \\ %{}) do
     %Funnel.Scent{
       action: nil,
+      type: :pr,
       commit_sha: "4539a6f5eaa9bf4129753d6acc5a3dca6e7692fb",
       default_branch_name: "master",
       installation_id: 66216,

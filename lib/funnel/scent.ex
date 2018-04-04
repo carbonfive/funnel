@@ -5,6 +5,7 @@ defmodule Funnel.Scent do
 
   @enforce_keys [
     :action,
+    :type,
     :owner_login,
     :repo_name,
     :commit_sha,
@@ -14,6 +15,7 @@ defmodule Funnel.Scent do
   ]
   defstruct [
     :action,
+    :type,
     :owner_login,
     :repo_name,
     :commit_sha,
@@ -45,6 +47,7 @@ defmodule Funnel.Scent do
   defp get_scent_from_pull_request(params) do
     %__MODULE__{
       action: params["action"],
+      type: :pull_request,
       owner_login: params["repository"]["owner"]["login"],
       repo_name: params["repository"]["name"],
       commit_sha: params["pull_request"]["head"]["sha"],
@@ -60,6 +63,7 @@ defmodule Funnel.Scent do
   defp get_scent_from_push(params) do
     %__MODULE__{
       action: nil,
+      type: :push,
       owner_login: params["repository"]["owner"]["login"],
       repo_name: params["repository"]["name"],
       commit_sha: params["head_commit"]["id"],
@@ -74,6 +78,7 @@ defmodule Funnel.Scent do
   def get_scent_from_pr(pull_request, installation_id) do
     %__MODULE__{
       action: nil,
+      type: :pr,
       repo_id: pull_request["head"]["repo"]["id"],
       owner_login: pull_request["head"]["repo"]["owner"]["login"],
       repo_name: pull_request["head"]["repo"]["name"],

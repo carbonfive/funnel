@@ -2,6 +2,7 @@ defmodule Funnel.Investigator do
   alias Funnel.Repo
   alias Funnel.GitHubAuth
   alias Funnel.GitHub
+  alias Funnel.Scent
   alias Funnel.Investigator.Helpers
   alias Funnel.Investigator.Status
   alias Tentacat.Repositories
@@ -22,6 +23,22 @@ defmodule Funnel.Investigator do
       true
         -> :noop
     end
+  end
+
+  @spec reevaluate_open_pull_requests(%Funnel.Scent{}) :: atom
+  def reevaluate_open_pull_requests(scent) do
+    tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
+    Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name}, tenta_client)
+    |> Enum.map(
+      fn(b) ->
+        Task.async fn ->
+          branch_scent = Scent.get_scent_from_pr(b, scent.installation_id)
+          apply(Helpers.strategy_module(branch_scent), [branch_scent, tenta_client])
+        end
+      end
+    )
+    |> Task.yield_many(10000)
+    :ok
   end
 
   @spec investigate_repository(%Funnel.GitHub.Repository{}) :: atom
