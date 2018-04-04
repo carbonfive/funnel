@@ -1,36 +1,34 @@
 # Funnel
 
-A little CI server for git hygiene. Written in Elixir.
-
-Rationale: [Always Squash and Rebase your Git Commits](https://blog.carbonfive.com/2017/08/28/always-squash-and-rebase-your-git-commits/)
+**A little CI service that makes sure your pull request is ready according to the git practices of your team.**
 
 ## Using funnel on a project
 
-1. Visit the Funnel homepage: [https://github.com/apps/funnel](https://github.com/apps/funnel)
+1. Visit the Funnel app listing: [https://github.com/apps/funnel](https://github.com/apps/funnel)
 
 2. Click `Configure`
 
 3. Select the organization and project(s) you want to use Funnel on
 
-That's it! Now, whenver you submitted a Pull Request, Funnel will warn you anytime your new branch is not rebased and squashed against the base branch. And Funnel keeps things up to date -- if the base branch changes, the branch being PR'd will fail Funnel until it's rebased and squashed against the updated base branch.
+4. Go to [https://funnel-c5.herokuapp.com/repositories](https://funnel-c5.herokuapp.com/repositories) to configure your repositories.
+
+That's it! 😄 Now, funnel will check and watch open pull requests to see if they are ready for merging. It can check to see if your PR is squashed into a single commit, rebased on the base branch, or both!
 
 ## Developing
+
+### Local Setup
 
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `cd assets && npm install`
-  * Source environment vars with `source .env`
-  * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+#### Environment
 
-### Environment
-
-Use [direnv](https://github.com/direnv/direnv) to manage local env variables.
+Use [direnv](https://github.com/direnv/direnv) to manage local env variables. Or just `source .envrc` manually.
 
 ```bash
 brew install direnv
@@ -45,13 +43,25 @@ export GITHUB_OAUTH_CLIENT_ID=skjsdf
 export GITHUB_OAUTH_CLIENT_SECRET=9872345kbjh
 ```
 
-## Testing
+#### Running
+
+Start Phoenix server with `mix phx.server`
+
+### Testing
 
 ```bash
 mix test
 ```
 
-## Reference
+### Deploying
+
+```bash
+git push heroku master
+```
+
+See it live at [https://funnel-c5.herokuapp.com](https://funnel-c5.herokuapp.com).
+
+## References
 
 ### GitHub API
 
