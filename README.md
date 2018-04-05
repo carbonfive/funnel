@@ -61,3 +61,4 @@ See it live at [https://funnel-c5.herokuapp.com](https://funnel-c5.herokuapp.com
 * [GitHub App Auth Strategy](https://developer.github.com/apps/building-integrations/setting-up-and-registering-github-apps/about-authentication-options-for-github-apps/#about-authentication-options-for-github-apps)
 * [GitHub App API](https://developer.github.com/v3/apps/)
 * [GitHub App Installations API](https://developer.github.com/v3/apps/installations/)
+
