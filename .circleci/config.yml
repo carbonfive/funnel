@@ -5,7 +5,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/elixir:1.6
+      - image: circleci/elixir:1.6.4
       - image: postgres:10.1
     working_directory: ~/repo
     steps:
