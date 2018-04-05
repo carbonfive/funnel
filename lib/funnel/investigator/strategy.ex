@@ -19,7 +19,8 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get commit's parent
-      commit_parent_sha = Enum.at(Commits.find(scent.commit_sha, scent.owner_login, scent.repo_name, tenta_client)["parents"], 0)["sha"]
+      {200, commit, _} = Commits.find(scent.commit_sha, scent.owner_login, scent.repo_name, tenta_client)
+      commit_parent_sha = Enum.at(commit["parents"], 0)["sha"]
       # get base branch head commit
       branch_sha = Helpers.get_base_sha(scent, tenta_client)
       # compare and update status
@@ -50,7 +51,7 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get open branch commits list
-      pr_commits = Pulls.Commits.list scent.owner_login, scent.repo_name, scent.pr_number, tenta_client
+      {200, pr_commits, _} = Pulls.Commits.list scent.owner_login, scent.repo_name, scent.pr_number, tenta_client
       # check length and update status
       chosen_status_body = get_status(Enum.count(pr_commits) === 1)
 
@@ -78,7 +79,8 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get open pull request's earliest commit
-      earliest_pr_commit = Enum.at(Pulls.Commits.list(scent.owner_login, scent.repo_name, scent.pr_number, tenta_client), 0)
+      {_, commits, _} = Pulls.Commits.list(scent.owner_login, scent.repo_name, scent.pr_number, tenta_client)
+      earliest_pr_commit = Enum.at(commits, 0)
       # get that commit's parent
       commit_parent_sha = Enum.at(earliest_pr_commit["parents"], 0)["sha"]
       # get base branch head commit

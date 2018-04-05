@@ -26,7 +26,7 @@ defmodule Funnel.Scent do
     :repo_id
   ]
 
-  @spec get_scent(%{}, binary) :: %__MODULE__{}
+  @spec get_scent(%{}, binary) :: %__MODULE__{} | nil
   def get_scent(params, event_type) do
     case event_type do
       "push" -> get_scent_from_push(params)
