@@ -39,7 +39,8 @@ defmodule Funnel.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.0"},
-      {:tentacat, "~> 0.8"},
+      # {:tentacat, "~> 0.9"},
+      {:tentacat, github: "edgurgel/tentacat", ref: "3bbb9990aafad0a7232d302526ca00e282e7ba43"},
       {:poison, "~> 3.0"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.3", only: :test},

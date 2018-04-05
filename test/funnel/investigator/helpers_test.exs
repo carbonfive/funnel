@@ -76,8 +76,8 @@ defmodule Funnel.Investigator.HelpersTest do
 
   test "get_base_sha/2 returns a sha" do
     with_mocks([
-      {Tentacat.Pulls, [], [filter: fn(_, _, _, _) -> [%{"base" => %{"ref" => "branch"}}] end]},
-      {Tentacat.Repositories.Branches, [], [find: fn(_, _, _, _) -> %{"commit" => %{"sha" => "sha1"}} end]}
+      {Tentacat.Pulls, [], [filter: fn(_, _, _, _) -> {200, [%{"base" => %{"ref" => "branch"}}], nil} end]},
+      {Tentacat.Repositories.Branches, [], [find: fn(_, _, _, _) -> {200, %{"commit" => %{"sha" => "sha1"}}, nil} end]}
     ]) do
       res = Funnel.Investigator.Helpers.get_base_sha build(:push_scent), @tenta_client
       assert res == "sha1"
