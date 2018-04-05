@@ -40,10 +40,10 @@ defmodule Funnel.Investigator.Helpers do
   Get the latest base branch commit sha for pull requests where this `Scent` is the head branch
   """
   @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: binary
-  def get_base_sha(scent, tenta_client) do
+  def get_base_sha(head_scent, tenta_client) do
     # see if there's a pull request open for this branch
-    base_branch_name = List.first(Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", head: "#{scent.owner_login}:#{scent.branch_name}"}, tenta_client))["base"]["ref"]
-    Tentacat.Repositories.Branches.find(scent.owner_login, scent.repo_name, base_branch_name, tenta_client)["commit"]["sha"]
+    base_branch_name = List.first(Tentacat.Pulls.filter(head_scent.owner_login, head_scent.repo_name, %{state: "open", head: "#{head_scent.owner_login}:#{head_scent.branch_name}"}, tenta_client))["base"]["ref"]
+    Tentacat.Repositories.Branches.find(head_scent.owner_login, head_scent.repo_name, base_branch_name, tenta_client)["commit"]["sha"]
   end
 
   @doc """
@@ -55,7 +55,9 @@ defmodule Funnel.Investigator.Helpers do
   end
 
   @doc """
-  Returns the configured Strategy's investigate_push() for the given `Scent`
+  Returns the `Scent`'s configured Strategy function.
+
+  This function, when called, will send a status after evaluating the Pull Request.
   """
   @spec strategy_module(%Funnel.Scent{}) :: fun()
   def strategy_module(scent) do

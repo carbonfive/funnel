@@ -16,9 +16,8 @@ defmodule FunnelWeb.EventsController do
     end
   end
 
-  @doc """
-  If it's a pull request notification
-  """
+
+  # If it's a pull request notification
   @spec handle_scent(%Plug.Conn{}, tuple) :: %Plug.Conn{}
   defp handle_scent(conn, {:pull_request, scent}) do
     Investigator.investigate(scent)
@@ -27,9 +26,7 @@ defmodule FunnelWeb.EventsController do
     |> text("Thanks!")
   end
 
-  @doc """
-  If it's a push notification
-  """
+  # If it's a push notification
   defp handle_scent(conn, {:push, scent}) do
     Investigator.reevaluate_open_pull_requests(scent)
     conn

@@ -30,13 +30,11 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 #### Environment
 
-Use [direnv](https://github.com/direnv/direnv) to manage local env variables. Or just `source .envrc` manually.
+See `.envrc-sample` for en example.
 
 ```bash
-brew install direnv
+source .envrc
 ```
-
-See `.envrc-sample` for en example.
 
 #### Running
 
