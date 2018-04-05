@@ -8,23 +8,26 @@ defmodule Funnel.Investigator do
   alias Tentacat.Repositories
 
   @doc """
-  Handle a given a webhook notification and generate github statuses
+  Handle an incoming pull request webhook notification and call the configured strategy in response
   """
   @spec investigate(%Funnel.Scent{}) :: atom
   def investigate(scent) do
     tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
     cond do
-      Helpers.is_notable_action?(scent) and repository_has_strategy(scent)
+      Helpers.is_notable_action?(scent) and repository_has_strategy?(scent)
         -> apply(Helpers.strategy_module(scent), [scent, tenta_client])
       Helpers.is_notable_action?(scent)
         -> Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending_strategy(repository_form_url(scent)), tenta_client
-      repository_has_strategy(scent)
+      repository_has_strategy?(scent)
         -> apply(Helpers.strategy_module(scent), [scent, tenta_client])
       true
         -> :noop
     end
   end
 
+  @doc """
+  Handle an incoming push webhook notification and reevaluate all open pull requests that have that push's branch as the base
+  """
   @spec reevaluate_open_pull_requests(%Funnel.Scent{}) :: atom
   def reevaluate_open_pull_requests(scent) do
     tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
@@ -41,6 +44,10 @@ defmodule Funnel.Investigator do
     :ok
   end
 
+  @doc """
+  Reevaluate all open pull requests for a repository
+  (Usually called when the `Repository.strategy` has been updated)
+  """
   @spec investigate_repository(%Funnel.GitHub.Repository{}) :: atom
   def investigate_repository(repository) do
     Helpers.get_scents_for_repository(repository)
@@ -48,8 +55,11 @@ defmodule Funnel.Investigator do
     :ok
   end
 
-  @spec repository_has_strategy(%Funnel.Scent{}) :: boolean
-  defp repository_has_strategy(scent) do
+  @doc """
+  Check if a scent has a correspending Repository record and strategy set for it
+  """
+  @spec repository_has_strategy?(%Funnel.Scent{}) :: boolean
+  defp repository_has_strategy?(scent) do
     try do
       not is_nil(Repo.get_by!(GitHub.Repository, git_hub_id: scent.repo_id).strategy_id)
     rescue
@@ -57,6 +67,9 @@ defmodule Funnel.Investigator do
     end
   end
 
+  @doc """
+  Helper to generate a URL where the user can change the `Repository.strategy`, or redirect them to the Repositories index if there is no record for the Repository
+  """
   @spec repository_form_url(%Funnel.Scent{}) :: binary
   defp repository_form_url(scent) do
     alias FunnelWeb.Router.Helpers
