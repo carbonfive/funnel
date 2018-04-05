@@ -1,6 +1,6 @@
 defmodule Funnel.Investigator.Strategy do
   @moduledoc """
-  A collection of different modules used to _investigate_ (aka audit) a given `scent`.
+  A collection of different modules used to _investigate_ (aka audit) a given `Scent`.
   """
 
   alias Funnel.Investigator.Helpers
