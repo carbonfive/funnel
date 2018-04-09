@@ -31,7 +31,8 @@ defmodule Funnel.Investigator do
   @spec reevaluate_open_pull_requests(%Funnel.Scent{}) :: atom
   def reevaluate_open_pull_requests(scent) do
     tenta_client = GitHubAuth.get_installation_client(scent.installation_id)
-    Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name}, tenta_client)
+    {200, pulls, _} = Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name}, tenta_client)
+    pulls
     |> Enum.map(
       fn(b) ->
         Task.async fn ->
