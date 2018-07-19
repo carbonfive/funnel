@@ -2,7 +2,7 @@ defmodule Funnel.GitHubAuth do
   @moduledoc """
   Helper functions for getting authorized Tentacat clients
   """
-  
+
   alias Funnel.GitHubAuth.Jwt
   alias Tentacat.App
   alias Tentacat.Client
@@ -24,7 +24,6 @@ defmodule Funnel.GitHubAuth do
 
   @spec get_installation_access_token(integer) :: binary
   defp get_installation_access_token(id) do
-    elem(App.Installations.token(id, get_app_client()), 1)["token"]
+    elem(App.Installations.token(get_app_client(), id), 1)["token"]
   end
-
 end

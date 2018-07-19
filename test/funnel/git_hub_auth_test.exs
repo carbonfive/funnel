@@ -5,12 +5,12 @@ defmodule Funnel.GitHubAuthTest do
   import Mock
 
   setup_all do
-    HTTPoison.start
+    HTTPoison.start()
   end
 
   test "get_installation_client/1" do
     with_mocks([
-      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn() -> "your.jwt.here" end]}
+      {Funnel.GitHubAuth.Jwt, [], [get_jwt: fn -> "your.jwt.here" end]}
     ]) do
       use_cassette "get_installation_access_token" do
         client = get_installation_client(65943)
@@ -18,5 +18,4 @@ defmodule Funnel.GitHubAuthTest do
       end
     end
   end
-
 end

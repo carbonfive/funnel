@@ -15,6 +15,7 @@ defmodule FunnelWeb.RepositoriesView do
     case repository.strategy do
       nil ->
         @nil_strategy_name
+
       strategy ->
         strategy.name
     end
@@ -25,5 +26,4 @@ defmodule FunnelWeb.RepositoriesView do
     Enum.map(strategies, &{&1.name, &1.id})
     |> List.insert_at(0, {@nil_strategy_name, ""})
   end
-
 end

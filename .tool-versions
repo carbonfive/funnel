@@ -1,3 +1,4 @@
 elixir 1.6.4
 erlang 20.3.2
 nodejs 9.3.0
+postgres 10.4

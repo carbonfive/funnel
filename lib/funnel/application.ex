@@ -11,7 +11,7 @@ defmodule Funnel.Application do
       # Start the Ecto repository
       supervisor(Funnel.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(FunnelWeb.Endpoint, []),
+      supervisor(FunnelWeb.Endpoint, [])
       # Start your own worker by calling: Funnel.Worker.start_link(arg1, arg2, arg3)
       # worker(Funnel.Worker, [arg1, arg2, arg3]),
     ]

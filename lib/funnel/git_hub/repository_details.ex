@@ -4,8 +4,8 @@ defmodule Funnel.GitHub.RepositoryDetails do
   alias Funnel.GitHub.RepositoryDetails
 
   embedded_schema do
-    field :name, :string
-    field :owner, :string
+    field(:name, :string)
+    field(:owner, :string)
   end
 
   @doc false

@@ -3,11 +3,10 @@ defmodule Funnel.Git.Strategy do
   import Ecto.Changeset
   alias Funnel.Git.Strategy
 
-
   schema "strategies" do
-    field :description, :string
-    field :name, :string
-    has_many :repositories, Funnel.GitHub.Repository
+    field(:description, :string)
+    field(:name, :string)
+    has_many(:repositories, Funnel.GitHub.Repository)
 
     timestamps()
   end

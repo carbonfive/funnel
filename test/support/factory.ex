@@ -1,5 +1,4 @@
 defmodule Funnel.Factory do
-
   use ExMachina
 
   def push_webhook_bad_body_factory do
@@ -28,7 +27,7 @@ defmodule Funnel.Factory do
       default_branch_name: "master",
       installation_id: 66216,
       branch_name: "bad-boy",
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -42,7 +41,7 @@ defmodule Funnel.Factory do
       owner_login: "outofambit",
       branch_name: "good-boy",
       repo_name: "musical-spork",
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -57,7 +56,7 @@ defmodule Funnel.Factory do
       installation_id: 66216,
       branch_name: "gourd",
       pr_number: 16,
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -72,7 +71,7 @@ defmodule Funnel.Factory do
       branch_name: "pumpkin",
       repo_name: "musical-spork",
       pr_number: 15,
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -87,7 +86,7 @@ defmodule Funnel.Factory do
       installation_id: 66216,
       branch_name: "ur_bases",
       pr_number: 17,
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -102,7 +101,7 @@ defmodule Funnel.Factory do
       branch_name: "my_bases",
       repo_name: "musical-spork",
       pr_number: 18,
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -116,7 +115,7 @@ defmodule Funnel.Factory do
       owner_login: "outofambit",
       branch_name: "master",
       repo_name: "musical-spork",
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
   end
 
@@ -131,7 +130,7 @@ defmodule Funnel.Factory do
       branch_name: "my_bases",
       repo_name: "musical-spork",
       pr_number: 18,
-      repo_id: 103584391
+      repo_id: 103_584_391
     }
     |> Map.merge(attrs)
   end
@@ -147,5 +146,4 @@ defmodule Funnel.Factory do
   def failure_status_factory do
     Funnel.Investigator.Status.failure()
   end
-
 end

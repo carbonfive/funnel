@@ -35,6 +35,7 @@ defmodule FunnelWeb.ConnCase do
             log: false,
             encrypt: false
           )
+
         build_conn()
         |> Plug.Session.call(opts)
         |> fetch_session()
@@ -44,10 +45,11 @@ defmodule FunnelWeb.ConnCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Funnel.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Funnel.Repo, {:shared, self()})
     end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end

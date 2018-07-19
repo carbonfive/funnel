@@ -8,10 +8,10 @@ defmodule FunnelWeb.AuthController do
   end
 
   def callback(conn, %{"code" => code}) do
-    client = OAuth.get_token! code: code
+    client = OAuth.get_token!(code: code)
+
     conn
     |> put_session(:git_hub_access_token, client.token.access_token)
     |> redirect(to: repositories_path(conn, :index))
   end
-
 end

@@ -25,13 +25,13 @@ defmodule FunnelWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Funnel.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Funnel.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end
