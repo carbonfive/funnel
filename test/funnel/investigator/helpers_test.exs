@@ -18,25 +18,25 @@ defmodule Funnel.Investigator.HelpersTest do
         Funnel.Investigator.Helpers.fail_open_pull_requests build(:failure_status).description, build(:push_scent), @tenta_client
 
         refute called Tentacat.Repositories.Statuses.create(
+          :_,
           build(:push_scent).owner_login,
           build(:push_scent).repo_name,
           build(:push_scent).commit_sha,
-          :_,
           :_
         )
         assert called Tentacat.Repositories.Statuses.create(
+          :_,
           build(:push_scent).owner_login,
           build(:push_scent).repo_name,
           :_,
-          build(:failure_status),
-          :_
+          build(:failure_status)
         )
         refute called Tentacat.Repositories.Statuses.create(
+          :_,
           build(:push_scent).owner_login,
           build(:push_scent).repo_name,
           :_,
-          build(:success_status),
-          :_
+          build(:success_status)
         )
       end
     end
@@ -50,18 +50,18 @@ defmodule Funnel.Investigator.HelpersTest do
         Funnel.Investigator.Helpers.mark_commit_pending build(:push_scent), @tenta_client
 
         assert called Tentacat.Repositories.Statuses.create(
+          :_,
           build(:push_scent).owner_login,
           build(:push_scent).repo_name,
           build(:push_scent).commit_sha,
-          build(:pending_status),
-          :_
+          build(:pending_status)
         )
         refute called Tentacat.Repositories.Statuses.create(
+          :_,
           build(:push_scent).owner_login,
           build(:push_scent).repo_name,
           :_,
-          build(:failure_status),
-          :_
+          build(:failure_status)
         )
         refute called Tentacat.Repositories.Statuses.create(
           build(:push_scent).owner_login,

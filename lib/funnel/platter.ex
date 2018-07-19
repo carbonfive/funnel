@@ -19,10 +19,10 @@ defmodule Funnel.Platter do
   end
 
   defp list_repositories(installation_id, user_access_token) do
-    {200, repositories, _} = Installations.list_repositories_for_user(installation_id, GitHubAuth.get_user_client(user_access_token))
+    {200, repositories, _} = Installations.list_repositories_for_user(GitHubAuth.get_user_client(user_access_token), installation_id)
     repositories
   end
-  
+
   @spec get_user_repositories_for_installation(integer, binary) :: list
   def get_user_repositories_for_installation(installation_id, user_access_token) do
     case list_repositories(installation_id, user_access_token) do

@@ -15,12 +15,12 @@ defmodule Funnel.Investigator.Helpers do
   @spec fail_open_pull_requests(binary, %Funnel.Scent{}, %Tentacat.Client{}) :: atom
   def fail_open_pull_requests(message, scent, tenta_client) do
     # get all prs that are targeted to this branch
-    {200, pulls, _} = Tentacat.Pulls.filter(scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name}, tenta_client)
+    {200, pulls, _} = Tentacat.Pulls.filter(tenta_client, scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name})
     # and mark them failed
     pulls |> Enum.map(
       fn(b) ->
         Task.async fn ->
-          Repositories.Statuses.create scent.owner_login, scent.repo_name, b["head"]["sha"], Status.failure(message), tenta_client
+          Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, b["head"]["sha"], Status.failure(message)
         end
       end
     )
@@ -33,7 +33,7 @@ defmodule Funnel.Investigator.Helpers do
   """
   @spec mark_commit_pending(%Funnel.Scent{}, %Tentacat.Client{}) :: any
   def mark_commit_pending(scent, tenta_client) do
-    Repositories.Statuses.create scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending(), tenta_client
+    Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending()
   end
 
   @doc """
@@ -42,9 +42,9 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: binary
   def get_base_sha(head_scent, tenta_client) do
     # see if there's a pull request open for this branch
-    {200, commits, _} = Tentacat.Pulls.filter(head_scent.owner_login, head_scent.repo_name, %{state: "open", head: "#{head_scent.owner_login}:#{head_scent.branch_name}"}, tenta_client)
+    {200, commits, _} = Tentacat.Pulls.filter(tenta_client, head_scent.owner_login, head_scent.repo_name, %{state: "open", head: "#{head_scent.owner_login}:#{head_scent.branch_name}"})
     base_branch_name = List.first(commits)["base"]["ref"]
-    {200, branch, _} = Tentacat.Repositories.Branches.find(head_scent.owner_login, head_scent.repo_name, base_branch_name, tenta_client)
+    {200, branch, _} = Tentacat.Repositories.Branches.find(tenta_client, head_scent.owner_login, head_scent.repo_name, base_branch_name)
     branch["commit"]["sha"]
   end
 
@@ -75,7 +75,7 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_open_pull_requests(%Funnel.GitHub.Repository{}) :: list(map)
   def get_open_pull_requests(repository) do
     tenta_client = GitHubAuth.get_installation_client(repository.git_hub_installation_id)
-    {200, pulls, _} = Tentacat.Pulls.filter(repository.details.owner, repository.details.name, %{state: "open"}, tenta_client)
+    {200, pulls, _} = Tentacat.Pulls.filter(tenta_client, repository.details.owner, repository.details.name, %{state: "open"})
     pulls
   end
 
