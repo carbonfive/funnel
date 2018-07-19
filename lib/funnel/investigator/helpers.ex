@@ -15,16 +15,27 @@ defmodule Funnel.Investigator.Helpers do
   @spec fail_open_pull_requests(binary, %Funnel.Scent{}, %Tentacat.Client{}) :: atom
   def fail_open_pull_requests(message, scent, tenta_client) do
     # get all prs that are targeted to this branch
-    {200, pulls, _} = Tentacat.Pulls.filter(tenta_client, scent.owner_login, scent.repo_name, %{state: "open", base: scent.branch_name})
+    {200, pulls, _} =
+      Tentacat.Pulls.filter(tenta_client, scent.owner_login, scent.repo_name, %{
+        state: "open",
+        base: scent.branch_name
+      })
+
     # and mark them failed
-    pulls |> Enum.map(
-      fn(b) ->
-        Task.async fn ->
-          Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, b["head"]["sha"], Status.failure(message)
-        end
-      end
-    )
+    pulls
+    |> Enum.map(fn b ->
+      Task.async(fn ->
+        Repositories.Statuses.create(
+          tenta_client,
+          scent.owner_login,
+          scent.repo_name,
+          b["head"]["sha"],
+          Status.failure(message)
+        )
+      end)
+    end)
     |> Task.yield_many(10000)
+
     :ok
   end
 
@@ -33,7 +44,13 @@ defmodule Funnel.Investigator.Helpers do
   """
   @spec mark_commit_pending(%Funnel.Scent{}, %Tentacat.Client{}) :: any
   def mark_commit_pending(scent, tenta_client) do
-    Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, scent.commit_sha, Status.pending()
+    Repositories.Statuses.create(
+      tenta_client,
+      scent.owner_login,
+      scent.repo_name,
+      scent.commit_sha,
+      Status.pending()
+    )
   end
 
   @doc """
@@ -42,9 +59,22 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_base_sha(%Funnel.Scent{}, %Tentacat.Client{}) :: binary
   def get_base_sha(head_scent, tenta_client) do
     # see if there's a pull request open for this branch
-    {200, commits, _} = Tentacat.Pulls.filter(tenta_client, head_scent.owner_login, head_scent.repo_name, %{state: "open", head: "#{head_scent.owner_login}:#{head_scent.branch_name}"})
+    {200, commits, _} =
+      Tentacat.Pulls.filter(tenta_client, head_scent.owner_login, head_scent.repo_name, %{
+        state: "open",
+        head: "#{head_scent.owner_login}:#{head_scent.branch_name}"
+      })
+
     base_branch_name = List.first(commits)["base"]["ref"]
-    {200, branch, _} = Tentacat.Repositories.Branches.find(tenta_client, head_scent.owner_login, head_scent.repo_name, base_branch_name)
+
+    {200, branch, _} =
+      Tentacat.Repositories.Branches.find(
+        tenta_client,
+        head_scent.owner_login,
+        head_scent.repo_name,
+        base_branch_name
+      )
+
     branch["commit"]["sha"]
   end
 
@@ -65,8 +95,13 @@ defmodule Funnel.Investigator.Helpers do
   def strategy_module(scent) do
     repository = Repo.get_by!(GitHub.Repository, git_hub_id: scent.repo_id)
     repository = Repo.preload(repository, :strategy)
-    atom = String.to_existing_atom("Elixir.Funnel.Investigator.Strategy.#{String.capitalize(repository.strategy.name)}")
-    &(atom.investigate_push/2)
+
+    atom =
+      String.to_existing_atom(
+        "Elixir.Funnel.Investigator.Strategy.#{String.capitalize(repository.strategy.name)}"
+      )
+
+    &atom.investigate_push/2
   end
 
   @doc """
@@ -75,7 +110,12 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_open_pull_requests(%Funnel.GitHub.Repository{}) :: list(map)
   def get_open_pull_requests(repository) do
     tenta_client = GitHubAuth.get_installation_client(repository.git_hub_installation_id)
-    {200, pulls, _} = Tentacat.Pulls.filter(tenta_client, repository.details.owner, repository.details.name, %{state: "open"})
+
+    {200, pulls, _} =
+      Tentacat.Pulls.filter(tenta_client, repository.details.owner, repository.details.name, %{
+        state: "open"
+      })
+
     pulls
   end
 
@@ -85,6 +125,8 @@ defmodule Funnel.Investigator.Helpers do
   @spec get_scents_for_repository(%Funnel.GitHub.Repository{}) :: list(%Funnel.Scent{})
   def get_scents_for_repository(repository) do
     get_open_pull_requests(repository)
-    |> Enum.map(fn(el) -> Funnel.Scent.get_scent_from_pr(el, repository.git_hub_installation_id) end)
+    |> Enum.map(fn el ->
+      Funnel.Scent.get_scent_from_pr(el, repository.git_hub_installation_id)
+    end)
   end
 end

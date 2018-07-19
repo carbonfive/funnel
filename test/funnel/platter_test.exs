@@ -8,14 +8,14 @@ defmodule Funnel.PlatterTest do
   @tenta_client Tentacat.Client.new()
 
   setup_all do
-    HTTPoison.start
+    HTTPoison.start()
   end
 
   setup_with_mocks([
     {Funnel.GitHubAuth, [],
-      [
-        get_user_client: fn(_) -> @tenta_client end
-      ]}
+     [
+       get_user_client: fn _ -> @tenta_client end
+     ]}
   ]) do
     :ok
   end
@@ -28,7 +28,8 @@ defmodule Funnel.PlatterTest do
 
   test "get_user_repositories_for_installation/2" do
     use_cassette "list_installation_repositories_for_user" do
-      assert Enum.count(Platter.get_user_repositories_for_installation(66216, "t0k3nstr1ng")) === 2
+      assert Enum.count(Platter.get_user_repositories_for_installation(66216, "t0k3nstr1ng")) ===
+               2
     end
   end
 
@@ -37,5 +38,4 @@ defmodule Funnel.PlatterTest do
       assert Enum.count(Platter.get_all_user_repositories("t0k3nstr1ng")) === 2
     end
   end
-
 end

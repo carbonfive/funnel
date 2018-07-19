@@ -4,8 +4,12 @@ defmodule FunnelWeb.RepositoriesControllerTest do
   import Mock
   alias Funnel.GitHub
 
-  @create_attrs %{git_hub_id: 123456, git_hub_installation_id: 66216, details: %{owner: "ian", name: "cheng"}}
-  @update_attrs %{git_hub_id: 654321, details: %{owner: "sara", name: "zac"}}
+  @create_attrs %{
+    git_hub_id: 123_456,
+    git_hub_installation_id: 66216,
+    details: %{owner: "ian", name: "cheng"}
+  }
+  @update_attrs %{git_hub_id: 654_321, details: %{owner: "sara", name: "zac"}}
   @invalid_attrs %{git_hub_id: nil, details: nil}
 
   def fixture(:repository) do
@@ -18,7 +22,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
 
     test "redirects when no github access token", %{conn: conn} do
       with_mocks(platter_mocks(false)) do
-        conn = get conn, repositories_path(conn, :index)
+        conn = get(conn, repositories_path(conn, :index))
         assert html_response(conn, 302)
       end
     end
@@ -30,6 +34,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> get(repositories_path(conn, :index))
+
         assert html_response(conn, 200) =~ "Repositories"
       end
     end
@@ -45,6 +50,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> get(repositories_path(conn, :show, repository))
+
         assert html_response(conn, 404)
       end
     end
@@ -56,7 +62,9 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> get(repositories_path(conn, :show, repository))
-        assert html_response(conn, 200) =~ @create_attrs.details.owner <> "/" <> @create_attrs.details.name
+
+        assert html_response(conn, 200) =~
+                 @create_attrs.details.owner <> "/" <> @create_attrs.details.name
       end
     end
   end
@@ -71,6 +79,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> get(repositories_path(conn, :edit, repository))
+
         assert html_response(conn, 404)
       end
     end
@@ -82,6 +91,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> get(repositories_path(conn, :edit, repository))
+
         assert html_response(conn, 200) =~ "Edit Repository"
       end
     end
@@ -97,6 +107,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> put(repositories_path(conn, :update, repository), repository: @update_attrs)
+
         assert html_response(conn, 404)
       end
     end
@@ -108,10 +119,13 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> put(repositories_path(conn, :update, repository), repository: @update_attrs)
+
         assert redirected_to(conn) == repositories_path(conn, :show, repository)
 
-        conn = get conn, repositories_path(conn, :show, repository)
-        assert html_response(conn, 200) =~ @update_attrs.details.owner <> "/" <> @update_attrs.details.name
+        conn = get(conn, repositories_path(conn, :show, repository))
+
+        assert html_response(conn, 200) =~
+                 @update_attrs.details.owner <> "/" <> @update_attrs.details.name
       end
     end
 
@@ -122,6 +136,7 @@ defmodule FunnelWeb.RepositoriesControllerTest do
           |> fetch_session()
           |> put_session(:git_hub_access_token, "t0kenstr1ng")
           |> put(repositories_path(conn, :update, repository), repository: @invalid_attrs)
+
         assert html_response(conn, 200) =~ "Edit Repository"
       end
     end
@@ -141,12 +156,10 @@ defmodule FunnelWeb.RepositoriesControllerTest do
     [
       {Funnel.Platter, [],
        [
-         get_all_user_repositories: fn(_) -> [] end,
-         user_has_git_hub_repository_access?: fn(_, _) -> has_access end
+         get_all_user_repositories: fn _ -> [] end,
+         user_has_git_hub_repository_access?: fn _, _ -> has_access end
        ]},
-       {Funnel.Investigator, [],
-        [investigate_repository: fn(_) -> :ok end]
-      }
+      {Funnel.Investigator, [], [investigate_repository: fn _ -> :ok end]}
     ]
   end
 end

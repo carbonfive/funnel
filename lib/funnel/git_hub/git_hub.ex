@@ -54,6 +54,7 @@ defmodule Funnel.GitHub do
         create_repository(Map.merge(attrs, %{git_hub_id: git_hub_id}))
         # this `elem` is probably bad—-we should do better error handling
         |> elem(1)
+
       repository ->
         repository
     end

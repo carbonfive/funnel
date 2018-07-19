@@ -29,8 +29,12 @@ defmodule Funnel.Scent do
   @spec get_scent(%{}, binary) :: %__MODULE__{} | nil
   def get_scent(params, event_type) do
     case event_type do
-      "push" -> get_scent_from_push(params)
-      "pull_request" -> get_scent_from_pull_request(params)
+      "push" ->
+        get_scent_from_push(params)
+
+      "pull_request" ->
+        get_scent_from_pull_request(params)
+
       _ ->
         require Logger
         Logger.debug("Unkown event type: " <> event_type)
@@ -88,5 +92,4 @@ defmodule Funnel.Scent do
       pr_number: pull_request["number"]
     }
   end
-
 end

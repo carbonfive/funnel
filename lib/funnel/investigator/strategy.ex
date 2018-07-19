@@ -19,14 +19,23 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get commit's parent
-      {200, commit, _} = Commits.find(tenta_client, scent.commit_sha, scent.owner_login, scent.repo_name)
+      {200, commit, _} =
+        Commits.find(tenta_client, scent.commit_sha, scent.owner_login, scent.repo_name)
+
       commit_parent_sha = Enum.at(commit["parents"], 0)["sha"]
       # get base branch head commit
       branch_sha = Helpers.get_base_sha(scent, tenta_client)
       # compare and update status
       chosen_status_body = get_status(commit_parent_sha === branch_sha)
 
-      Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, scent.commit_sha, chosen_status_body
+      Repositories.Statuses.create(
+        tenta_client,
+        scent.owner_login,
+        scent.repo_name,
+        scent.commit_sha,
+        chosen_status_body
+      )
+
       :ok
     end
 
@@ -51,11 +60,20 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get open branch commits list
-      {200, pr_commits, _} = Pulls.Commits.list tenta_client, scent.owner_login, scent.repo_name, scent.pr_number
+      {200, pr_commits, _} =
+        Pulls.Commits.list(tenta_client, scent.owner_login, scent.repo_name, scent.pr_number)
+
       # check length and update status
       chosen_status_body = get_status(Enum.count(pr_commits) === 1)
 
-      Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, scent.commit_sha, chosen_status_body
+      Repositories.Statuses.create(
+        tenta_client,
+        scent.owner_login,
+        scent.repo_name,
+        scent.commit_sha,
+        chosen_status_body
+      )
+
       :ok
     end
 
@@ -79,7 +97,9 @@ defmodule Funnel.Investigator.Strategy do
       # mark as pending
       Helpers.mark_commit_pending(scent, tenta_client)
       # get open pull request's earliest commit
-      {_, commits, _} = Pulls.Commits.list(tenta_client, scent.owner_login, scent.repo_name, scent.pr_number)
+      {_, commits, _} =
+        Pulls.Commits.list(tenta_client, scent.owner_login, scent.repo_name, scent.pr_number)
+
       earliest_pr_commit = Enum.at(commits, 0)
       # get that commit's parent
       commit_parent_sha = Enum.at(earliest_pr_commit["parents"], 0)["sha"]
@@ -88,7 +108,14 @@ defmodule Funnel.Investigator.Strategy do
       # compare and update status
       chosen_status_body = get_status(commit_parent_sha === branch_sha)
 
-      Repositories.Statuses.create tenta_client, scent.owner_login, scent.repo_name, scent.commit_sha, chosen_status_body
+      Repositories.Statuses.create(
+        tenta_client,
+        scent.owner_login,
+        scent.repo_name,
+        scent.commit_sha,
+        chosen_status_body
+      )
+
       :ok
     end
 

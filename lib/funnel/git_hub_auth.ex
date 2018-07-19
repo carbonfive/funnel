@@ -26,5 +26,4 @@ defmodule Funnel.GitHubAuth do
   defp get_installation_access_token(id) do
     elem(App.Installations.token(get_app_client(), id), 1)["token"]
   end
-
 end

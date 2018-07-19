@@ -3,12 +3,11 @@ defmodule Funnel.GitHub.Repository do
   import Ecto.Changeset
   alias Funnel.GitHub.Repository
 
-
   schema "repositories" do
-    field :git_hub_id, :integer, nil: false
-    field :git_hub_installation_id, :integer, nil: false
-    belongs_to :strategy, Funnel.Git.Strategy
-    embeds_one :details, Funnel.GitHub.RepositoryDetails, on_replace: :update
+    field(:git_hub_id, :integer, nil: false)
+    field(:git_hub_installation_id, :integer, nil: false)
+    belongs_to(:strategy, Funnel.Git.Strategy)
+    embeds_one(:details, Funnel.GitHub.RepositoryDetails, on_replace: :update)
 
     timestamps()
   end
