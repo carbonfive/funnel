@@ -1,4 +1,4 @@
-elixir 1.6.6
-erlang 21.0.1
+elixir 1.6.6-otp-21
+erlang 21.0.9
 nodejs 9.3.0
 postgres 10.4
